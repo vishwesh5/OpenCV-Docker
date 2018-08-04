@@ -5,7 +5,7 @@ MAINTAINER Vishwesh Ravi Shrimali <vishweshshrimali5@gmail.com>
 # Setup Environment Variable
 ENV cvVersionChoice=1
 ENV cvVersion="3.4.1"
-ENV cwd=$(pwd)
+ENV cwd=""
 
 RUN apt-get update && \
 	apt-get remove -y \
