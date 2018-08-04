@@ -7,7 +7,7 @@ RUN cvVersionChoice=1
 RUN cvVersion="3.4.1"
 RUN cwd=$(pwd)
 
-RUN sudo apt-get update && \
+RUN apt-get update && \
 	apt-get remove -y \
 	x264 libx264-dev && \
 	apt-get install -y \
