@@ -150,4 +150,6 @@ RUN apt-get install wget && \
 	source ~/.bashrc
 
 RUN conda install xeus-cling notebook -c QuantStack -c conda-forge
+RUN conda install jupyterhub
+
 
