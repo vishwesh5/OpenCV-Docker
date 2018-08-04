@@ -125,19 +125,20 @@ RUN cd opencv && \
 RUN /bin/sh -c 'echo "/usr/local/lib" >> etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
+WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages
 RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so") && \
-	py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
-	cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages && \
-	ln -s -f py2binPath cv2.so && \
-	cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages && \
+	ln -s -f py2binPath cv2.so
+
+WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages
+RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
 	ln -s -f py3binPath cv2.so
 
+WORKDIR $cwd
 RUN apt-get install wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
-	./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-	echo 'export PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc && \
-	source ~/.bashrc
-
-RUN conda install xeus-cling notebook -c QuantStack -c conda-forge
-RUN conda install jupyterhub==0.8.1
+	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
+	echo 'export PATH=\"~/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
+	source ~/.bashrc" && \
+	conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
+	conda install -y jupyterhub==0.8.1
