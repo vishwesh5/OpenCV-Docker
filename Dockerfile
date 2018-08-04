@@ -81,9 +81,8 @@ RUN pip2 install -U virtualenv virtualenvwrapper && \
 	pip3 install -U virtualenv virtualenvwrapper
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
-	echo "source ~/.local/bin/virtualenvwrapper.sh" >> ~/.bashrc && \
-	cd $cwd && \
-	source ~/.local/bin/virtualenvwrapper.sh
+	echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc && \
+	cd $cwd
 
 RUN mkvirtualenv OpenCV-"$cvVersion"-py2 -p python2 && \
 	workon OpenCV-"$cvVersion"-py2 && \
