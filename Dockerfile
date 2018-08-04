@@ -81,10 +81,9 @@ RUN pip2 install -U virtualenv virtualenvwrapper && \
 	pip3 install -U virtualenv virtualenvwrapper
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
-	echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
-	cd $cwd
-
-RUN mkvirtualenv OpenCV-"$cvVersion"-py2 -p python2 && \
+	/bin/bash -c echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
+	cd $cwd && \
+	mkvirtualenv OpenCV-"$cvVersion"-py2 -p python2 && \
 	workon OpenCV-"$cvVersion"-py2 && \
 	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
 	pip install ipykernel && \
