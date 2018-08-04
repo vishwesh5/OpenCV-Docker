@@ -5,7 +5,7 @@ MAINTAINER Vishwesh Ravi Shrimali <vishweshshrimali5@gmail.com>
 # Setup Environment Variable
 ENV cvVersionChoice=1
 ENV cvVersion="3.4.1"
-ENV cwd=""
+ENV cwd="/"
 
 RUN apt-get update && \
 	apt-get remove -y \
@@ -133,7 +133,7 @@ WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages
 RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
 	ln -s -f py3binPath cv2.so
 
-WORKDIR ""
+WORKDIR /
 RUN apt-get install wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
