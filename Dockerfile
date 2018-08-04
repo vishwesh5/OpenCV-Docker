@@ -77,8 +77,8 @@ RUN apt-get install -y python3-testresources
 #RUN python -m pip uninstall pip && \
 #	apt install python-pip --reinstall
 
-RUN pip2 install virtualenv virtualenvwrapper && \
-	pip3 install virtualenv virtualenvwrapper
+RUN pip2 install -U virtualenv virtualenvwrapper && \
+	pip3 install -U virtualenv virtualenvwrapper
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 	echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc && \
