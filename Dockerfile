@@ -140,5 +140,7 @@ RUN apt-get install wget && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
 	echo 'export PATH=\"~/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
 	source ~/.bashrc && \
+	cat ~/.bashrc && \
+	echo '$PATH' && \
 	conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
 	conda install -y jupyterhub==0.8.1"
