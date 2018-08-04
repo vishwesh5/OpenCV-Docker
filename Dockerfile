@@ -3,9 +3,9 @@ FROM ubuntu:16.04
 MAINTAINER Vishwesh Ravi Shrimali <vishweshshrimali5@gmail.com>
 
 # Setup Environment Variable
-ENV cvVersionChoice=1
-ENV cvVersion="3.4.1"
-ENV cwd=$(pwd)
+RUN cvVersionChoice=1
+RUN cvVersion="3.4.1"
+RUN cwd=$(pwd)
 
 RUN apt-get update && \
 	apt-get remove -y \
