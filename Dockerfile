@@ -71,14 +71,14 @@ RUN pip2 install -U pip numpy && \
 
 RUN apt-get install -y python3-testresources
 
-RUN python3 -m pip uninstall pip && \
-	apt install python3-pip --reinstall
+#RUN python3 -m pip uninstall pip && \
+#	apt install python3-pip --reinstall
 
-RUN python -m pip uninstall pip && \
-	apt install python-pip --reinstall
+#RUN python -m pip uninstall pip && \
+#	apt install python-pip --reinstall
 
 RUN pip2 install virtualenv virtualenvwrapper && \
-	python3 -m pip install virtualenv virtualenvwrapper
+	pip3 install virtualenv virtualenvwrapper
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 	echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc && \
