@@ -125,8 +125,8 @@ RUN make -j4 && make install
 RUN sh -c 'echo "/usr/local/lib" >> etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
-ENV py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so")
-ENV py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so")
+RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so")
+RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so")
 
 RUN cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages && \
 	ln -s -f py2binPath cv2.so
