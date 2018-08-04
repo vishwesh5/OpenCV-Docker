@@ -3,9 +3,9 @@ FROM ubuntu:16.04
 MAINTAINER Vishwesh Ravi Shrimali <vishweshshrimali5@gmail.com>
 
 # Setup Environment Variable
-RUN cvVersionChoice=1
-RUN cvVersion="3.4.1"
-RUN cwd=$(pwd)
+ENV cvVersionChoice=1
+ENV cvVersion="3.4.1"
+ENV cwd=$(pwd)
 
 RUN apt-get update && \
 	apt-get remove -y \
@@ -112,7 +112,7 @@ RUN cd opencv && \
 	mkdir build && \
 	cd build && \
 	cmake -DCMAKE_BUILD_TYPE=RELEASE \
-	-DCMAKE_INSTALL_PREFIX=$cwd/installation/OpenCV-$cvVersion \
+	-DCMAKE_INSTALL_PREFIX=/usr/local \
 	-DINSTALL_C_EXAMPLES=ON \
 	-DWITH_TBB=ON \
 	-DWITH_V4L=ON \
