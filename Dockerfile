@@ -138,9 +138,9 @@ RUN apt-get install wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-	echo 'export PATH=\"~/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
+	echo 'export PATH=\"/root/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
 	source ~/.bashrc && \
 	cat ~/.bashrc && \
 	echo '$PATH' && \
-	conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
-	conda install -y jupyterhub==0.8.1"
+	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
+	/root/anaconda3/bin/conda install -y jupyterhub==0.8.1"
