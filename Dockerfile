@@ -28,7 +28,7 @@ RUN apt-get update && \
 	libswscale-dev \
 	libdc1394-22-dev \
 	libxine2-dev \
-	lib4l-dev
+	libv4l-dev
 
 RUN cd /usr/include/linux && \
 	ln -s -f ../libv4l1-videodev.h videodev.h && \
