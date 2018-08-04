@@ -89,11 +89,13 @@ RUN echo /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh && \
 	workon OpenCV-\"$cvVersion\"-py2 && \
 	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
 	pip install ipykernel && \
+	python -m ipykernel install --name OpenCV-$cvVersion-py2 && \
 	deactivate && \
 	mkvirtualenv OpenCV-\"$cvVersion\"-py3 -p python3 && \
 	workon OpenCV-\"$cvVersion\"-py3 && \
 	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
 	pip install ipykernel && \
+	python -m ipykernel install --name OpenCV-$cvVersion-py3 && \
 	deactivate"
 
 RUN git clone https://github.com/opencv/opencv.git && \
@@ -108,9 +110,8 @@ RUN git clone https://github.com/opencv/opencv_contrib.git && \
 
 RUN cd opencv && \
 	mkdir build && \
-	cd build
-
-RUN cmake -DCMAKE_BUILD_TYPE=RELEASE \
+	cd build && \
+	cmake -DCMAKE_BUILD_TYPE=RELEASE \
 	-DCMAKE_INSTALL_PREFIX=$cwd/installation/OpenCV-$cvVersion \
 	-DINSTALL_C_EXAMPLES=ON \
 	-DWITH_TBB=ON \
@@ -118,29 +119,18 @@ RUN cmake -DCMAKE_BUILD_TYPE=RELEASE \
 	-DWITH_QT=ON \
 	-DWITH_OPENGL=ON \
 	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-	-DBUILD_EXAMPLES=ON ..
+	-DBUILD_EXAMPLES=ON .. && \
+	make -j4 && make install
 
-RUN make -j4 && make install
-
-RUN sh -c 'echo "/usr/local/lib" >> etc/ld.so.conf.d/opencv.conf'
+RUN /bin/sh -c 'echo "/usr/local/lib" >> etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
-RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so")
-RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so")
-
-RUN cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages && \
-	ln -s -f py2binPath cv2.so
-
-RUN cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages && \
+RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so") && \
+	py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
+	cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages && \
+	ln -s -f py2binPath cv2.so && \
+	cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages && \
 	ln -s -f py3binPath cv2.so
-
-RUN workon OpenCV-$cvVersion-py2
-RUN python -m ipykernel install --name OpenCV-$cvVersion-py2
-RUN deactivate
-
-RUN workon OpenCV-$cvVersion-py3
-RUN python -m ipykernel install --name OpenCV-$cvVersion-py3
-RUN deactivate
 
 RUN apt-get install wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
@@ -151,5 +141,3 @@ RUN apt-get install wget && \
 
 RUN conda install xeus-cling notebook -c QuantStack -c conda-forge
 RUN conda install jupyterhub==0.8.1
-
-
