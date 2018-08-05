@@ -71,20 +71,20 @@ RUN pip2 install -U pip numpy && \
 
 RUN apt-get install -y python3-testresources
 
-#RUN python3 -m pip uninstall pip && \
-#	apt install python3-pip --reinstall
+RUN python3 -m pip uninstall pip && \
+	apt install python3-pip --reinstall
 
 #RUN python -m pip uninstall pip && \
 #	apt install python-pip --reinstall
 
 RUN pip2 install -U virtualenv virtualenvwrapper && \
-	pip3 install -U virtualenv virtualenvwrapper
+	python3 -m pip install -U virtualenv virtualenvwrapper
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 	echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
 	cd $cwd
 
-RUN echo /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh && \
+RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh && \
 	mkvirtualenv OpenCV-\"$cvVersion\"-py2 -p python2 && \
 	workon OpenCV-\"$cvVersion\"-py2 && \
 	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
