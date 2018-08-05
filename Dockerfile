@@ -7,6 +7,8 @@ ENV cvVersionChoice=1
 ENV cvVersion="3.4.1"
 ENV cwd="/"
 
+WORKDIR /
+
 RUN apt-get update && \
 	apt-get remove -y \
 	x264 libx264-dev && \
@@ -129,17 +131,24 @@ WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages
 RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so") && \
 	ln -s -f py2binPath cv2.so
 
-WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages
+WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages
 RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
 	ln -s -f py3binPath cv2.so
 
 WORKDIR /
-ENV PATH="/root/anaconda3/bin:$PATH"
+# ENV PATH="/root/anaconda3/bin:$PATH"
+#RUN apt-get install wget && \
+#	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
+#	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
+#	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
+#	echo 'export PATH=\"/root/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
+#	source ~/.bashrc && \
+#	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
+#	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1"
+
 RUN apt-get install wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-	echo 'export PATH=\"/root/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
-	source ~/.bashrc && \
-	conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
-	conda install -y -c conda-forge jupyterhub==0.8.1"
+	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
+	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1"
