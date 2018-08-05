@@ -151,4 +151,5 @@ RUN apt-get install wget && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
 	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
-	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1"
+	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
+	rm Anaconda3-5.2.0-Linux-x86_64.sh
