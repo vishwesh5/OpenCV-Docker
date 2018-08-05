@@ -122,7 +122,7 @@ RUN cd opencv && \
 	-DBUILD_EXAMPLES=ON .. && \
 	make -j4 && make install
 
-RUN /bin/sh -c 'echo "/usr/local/lib" >> etc/ld.so.conf.d/opencv.conf'
+RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
 WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages
