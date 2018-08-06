@@ -84,7 +84,7 @@ RUN python3 -m pip uninstall -y pip && \
 RUN pip2 install -U virtualenv virtualenvwrapper && \
 	python3 -m pip install -U virtualenv virtualenvwrapper
 
-RUN python3 -m pip install --user jupyter jupyterhub==0.8.1 notebook
+RUN python3 -m pip install -U jupyter jupyterhub==0.8.1 notebook
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 	echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
