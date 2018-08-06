@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 
 MAINTAINER Vishwesh Ravi Shrimali <vishweshshrimali5@gmail.com>
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Setup Environment Variable
 ENV cvVersionChoice=1
 ENV cvVersion="3.4.1"
@@ -156,3 +158,4 @@ RUN apt-get install wget && \
 	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
 	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
+ENV DEBIAN_FRONTEND teletype
