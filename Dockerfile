@@ -159,7 +159,7 @@ RUN apt-get install -y wget && \
 	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge" && \
 	#/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
-RUN cp -r cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
+RUN cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
 RUN apt-get install -y vim
 ENV PATH=$TMPPATH
 RUN apt-get install -y nodejs \
