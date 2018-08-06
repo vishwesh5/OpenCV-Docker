@@ -139,6 +139,7 @@ RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
 	ln -s -f py3binPath cv2.so
 
 WORKDIR /
+ENV TMPPATH="$PATH"
 ENV PATH="/root/anaconda3/bin:$PATH"
 #RUN apt-get install wget && \
 #	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
@@ -158,4 +159,5 @@ RUN apt-get install wget && \
 	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
 	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
+ENV PATH=$TMPPATH
 ENV DEBIAN_FRONTEND teletype
