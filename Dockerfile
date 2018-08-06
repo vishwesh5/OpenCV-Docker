@@ -70,8 +70,8 @@ RUN apt-get install -y \
 	python3-dev \
 	python3-pip
 
-RUN pip2 install -U pip numpy && \
-	pip3 install -U pip numpy
+RUN pip2 install --user pip numpy && \
+	pip3 install --user pip numpy
 
 RUN apt-get install -y python3-testresources
 
@@ -81,10 +81,10 @@ RUN python3 -m pip uninstall -y pip && \
 #RUN python -m pip uninstall pip && \
 #	apt install python-pip --reinstall
 
-RUN pip2 install -U virtualenv virtualenvwrapper && \
-	python3 -m pip install -U virtualenv virtualenvwrapper
+RUN pip2 install --user virtualenv virtualenvwrapper && \
+	python3 -m pip install --user virtualenv virtualenvwrapper
 
-RUN python3 -m pip install -U jupyter jupyterhub==0.8.1 notebook
+RUN python3 -m pip install --user jupyter jupyterhub==0.8.1 notebook
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 	echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
@@ -93,15 +93,15 @@ RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh && \
 	mkvirtualenv OpenCV-\"$cvVersion\"-py2 -p python2 && \
 	workon OpenCV-\"$cvVersion\"-py2 && \
-	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	pip install ipykernel && \
-	python -m ipykernel install --name OpenCV-$cvVersion-py2 && \
+	pip install --user numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	pip install --user ipykernel && \
+	python -m ipykernel install --user --name OpenCV-$cvVersion-py2 && \
 	deactivate && \
 	mkvirtualenv OpenCV-\"$cvVersion\"-py3 -p python3 && \
 	workon OpenCV-\"$cvVersion\"-py3 && \
-	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	pip install ipykernel && \
-	python -m ipykernel install --name OpenCV-$cvVersion-py3 && \
+	pip install --user numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	pip install --user ipykernel && \
+	python -m ipykernel install --user --name OpenCV-$cvVersion-py3 && \
 	deactivate"
 
 RUN git clone https://github.com/opencv/opencv.git && \
@@ -156,7 +156,7 @@ RUN apt-get install -y wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge" && \
+	/root/anaconda3/bin/conda install --user -y xeus-cling notebook -c QuantStack -c conda-forge" && \
 	#/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 RUN cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
