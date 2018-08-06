@@ -84,7 +84,7 @@ RUN python3 -m pip uninstall -y pip && \
 RUN pip2 install -U virtualenv virtualenvwrapper && \
 	python3 -m pip install -U virtualenv virtualenvwrapper
 
-RUN python3 -m pip install -U jupyter jupyterhub notebook
+RUN python3 -m pip install -U jupyter jupyterhub==0.8.1 notebook
 
 RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 	echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
@@ -156,10 +156,8 @@ RUN apt-get install -y wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-	/root/anaconda3/bin/conda create -n cling && \
-	source activate cling && \
 	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
-	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
+	#/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 RUN cp -r cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
 RUN apt-get install -y vim
