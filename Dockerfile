@@ -7,9 +7,9 @@ ENV DEBIAN_FRONTEND noninteractive
 # Setup Environment Variable
 ENV cvVersionChoice=1
 ENV cvVersion="3.4.1"
-ENV cwd="/"
+ENV cwd="/home/"
 
-WORKDIR /
+WORKDIR $cwd
 
 RUN apt-get update && \
 	apt-get remove -y \
@@ -140,7 +140,7 @@ WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages
 RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
 	ln -s -f py3binPath cv2.so
 
-WORKDIR /
+WORKDIR $cwd
 ENV TMPPATH="$PATH"
 ENV PATH="/root/anaconda3/bin:$PATH"
 #RUN apt-get install wget && \
