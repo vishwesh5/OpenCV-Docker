@@ -73,8 +73,8 @@ RUN pip2 install -U pip numpy && \
 
 RUN apt-get install -y python3-testresources
 
-RUN python3 -m pip uninstall pip && \
-	apt install python3-pip --reinstall
+RUN python3 -m pip uninstall -y pip && \
+	apt install -y python3-pip --reinstall
 
 #RUN python -m pip uninstall pip && \
 #	apt install python-pip --reinstall
@@ -122,7 +122,8 @@ RUN cd opencv && \
 	-DWITH_OPENGL=ON \
 	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
 	-DBUILD_EXAMPLES=ON .. && \
-	make -j4 && make install
+	make -j4 && make install && \
+	cd ..
 
 RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
@@ -136,7 +137,7 @@ RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
 	ln -s -f py3binPath cv2.so
 
 WORKDIR /
-# ENV PATH="/root/anaconda3/bin:$PATH"
+ENV PATH="/root/anaconda3/bin:$PATH"
 #RUN apt-get install wget && \
 #	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 #	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
@@ -150,6 +151,8 @@ RUN apt-get install wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
+	/root/anaconda3/bin/conda create -n cling && \
+	source activate cling && \
 	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
 	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
