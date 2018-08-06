@@ -70,8 +70,8 @@ RUN apt-get install -y \
 	python3-dev \
 	python3-pip
 
-RUN pip2 install --user pip numpy && \
-	pip3 install --user pip numpy
+RUN pip2 install -U pip numpy && \
+	pip3 install -U pip numpy
 
 RUN apt-get install -y python3-testresources
 
@@ -81,8 +81,8 @@ RUN python3 -m pip uninstall -y pip && \
 #RUN python -m pip uninstall pip && \
 #	apt install python-pip --reinstall
 
-RUN pip2 install --user virtualenv virtualenvwrapper && \
-	python3 -m pip install --user virtualenv virtualenvwrapper
+RUN pip2 install -U virtualenv virtualenvwrapper && \
+	python3 -m pip install -U virtualenv virtualenvwrapper
 
 RUN python3 -m pip install --user jupyter jupyterhub==0.8.1 notebook
 
