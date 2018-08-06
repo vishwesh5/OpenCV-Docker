@@ -93,15 +93,15 @@ RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
 RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh && \
 	mkvirtualenv OpenCV-\"$cvVersion\"-py2 -p python2 && \
 	workon OpenCV-\"$cvVersion\"-py2 && \
-	pip install --user numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	pip install --user ipykernel && \
-	python -m ipykernel install --user --name OpenCV-$cvVersion-py2 && \
+	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	pip install ipykernel && \
+	python -m ipykernel install --name OpenCV-$cvVersion-py2 && \
 	deactivate && \
 	mkvirtualenv OpenCV-\"$cvVersion\"-py3 -p python3 && \
 	workon OpenCV-\"$cvVersion\"-py3 && \
-	pip install --user numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	pip install --user ipykernel && \
-	python -m ipykernel install --user --name OpenCV-$cvVersion-py3 && \
+	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	pip install ipykernel && \
+	python -m ipykernel install --name OpenCV-$cvVersion-py3 && \
 	deactivate"
 
 RUN git clone https://github.com/opencv/opencv.git && \
