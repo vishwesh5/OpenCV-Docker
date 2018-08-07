@@ -81,11 +81,14 @@ RUN apt-get install -y wget && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
 RUN ["/bin/bash", "-c", "source /root/.bashrc"]
+ENV PATH /bin/anaconda3/bin:$PATH
+ENV CONDA_DEFAULT_ENV OpenCV-"$cvVersion"-py2
+ENV CONDA_PREFIX /opt/anaconda3/envs/OpenCV-"$cvVersion"-py2
 
-RUN /bin/bash -c "source /root/.bashrc" 
-#	source activate OpenCV-"$cvVersion"-py2
-#	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
-#	source deactivate && \
-#	jupyter-kernelspec list
+RUN /bin/bash -c "source /root/.bashrc" && \
+	source activate OpenCV-"$cvVersion"-py2 && \
+	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
+	source deactivate && \
+	jupyter-kernelspec list
 
 ENV DEBIAN_FRONTEND teletype
