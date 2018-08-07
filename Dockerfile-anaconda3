@@ -81,6 +81,7 @@ RUN apt-get install -y wget && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
 RUN ["/bin/bash", "-c", "source /root/.bashrc"]
+WORKDIR $cwd/anaconda3/envs
 
 RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
 	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
@@ -88,6 +89,16 @@ RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
 	echo 'source activate OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
 	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
 	echo 'source deactivate' >> ~/.bashrc
+
+RUN /bin/bash -c "source OpenCV-\"$cvVersion\"-py2/bin/activate && \
+	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
+	source deactivate && \
+	source OpenCV-\"$cvVersion\"-py3/bin/activate && \
+	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3 && \
+	source deactivate"
+
+WORKDIR $cwd
+
 RUN git clone https://github.com/opencv/opencv.git && \
 	cd opencv && \
 	git checkout $cvVersion && \
