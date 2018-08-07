@@ -107,6 +107,8 @@ RUN mkdir OpenCV-"$cvVersion"-py2/opencv_include && \
 	cp -r OpenCV-"$cvVersion"-py3/include/* OpenCV-"$cvVersion"-py3/opencv_include && \
 	cp -r OpenCV-"$cvVersion"-py3/opencv_include/python3.6m/* OpenCV-"$cvVersion"-py3/opencv_include
 
+WORKDIR $cwd
+
 RUN cd opencv && \
 	mkdir build && \
 	cd build && \
