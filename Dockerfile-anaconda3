@@ -86,7 +86,7 @@ ENV CONDA_DEFAULT_ENV OpenCV-"$cvVersion"-py2
 ENV CONDA_PREFIX /opt/anaconda3/envs/OpenCV-"$cvVersion"-py2
 
 RUN /bin/bash -c "source /root/.bashrc" && \
-	/bin/bash - c "source activate OpenCV-\"$cvVersion\"-py2" && \
+	/bin/bash -c "source activate OpenCV-\"$cvVersion\"-py2" && \
 	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
 	/bin/bash -c "source deactivate"
 
