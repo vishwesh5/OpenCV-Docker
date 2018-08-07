@@ -89,7 +89,7 @@ RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
 	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py2 >> ~/.bashrc && \
 	echo 'source deactivate' >> ~/.bashrc && \
 	echo 'source activate OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
-	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py3 >> ~/.bashrc && \
+	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
 	echo 'source deactivate' >> ~/.bashrc
 
 ENV DEBIAN_FRONTEND teletype
