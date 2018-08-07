@@ -77,13 +77,11 @@ RUN apt-get install -y wget && \
 	/opt/anaconda3/bin/conda install -y -n OpenCV-\"$cvVersion\"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython && \
 	/opt/anaconda3/bin/conda create -y -f -n OpenCV-\"$cvVersion\"-py3 python=3.6 anaconda && \
 	/opt/anaconda3/bin/conda install -y -n OpenCV-\"$cvVersion\"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	/opt/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1 && \
 	source /opt/anaconda3/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
-	source deactivate && \
 	source /opt/anaconda3/bin/activate OpenCV-\"$cvVersion\"-py3 && \
-	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3 && \
-	source deactivate && \
-	/opt/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
+	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
 RUN ["/bin/bash", "-c", "source /root/.bashrc"]
