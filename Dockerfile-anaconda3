@@ -90,10 +90,10 @@ RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
 	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
 	echo 'source deactivate' >> ~/.bashrc
 
-RUN /bin/bash -c "source OpenCV-\"$cvVersion\"-py2/bin/activate && \
+RUN /bin/bash -c "source /opt/anaconda3/envs/OpenCV-\"$cvVersion\"-py2/bin/activate && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
 	source deactivate && \
-	source OpenCV-\"$cvVersion\"-py3/bin/activate && \
+	source /opt/anaconda3/envs/OpenCV-\"$cvVersion\"-py3/bin/activate && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3 && \
 	source deactivate"
 
