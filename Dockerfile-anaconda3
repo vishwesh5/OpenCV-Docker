@@ -81,9 +81,6 @@ RUN apt-get install -y wget && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
 RUN ["/bin/bash", "-c", "source /root/.bashrc"]
-ENV PATH /bin/anaconda3/bin:$PATH
-ENV CONDA_DEFAULT_ENV OpenCV-"$cvVersion"-py2
-ENV CONDA_PREFIX /opt/anaconda3/envs/OpenCV-"$cvVersion"-py2
 
 RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
 	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
@@ -91,5 +88,60 @@ RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
 	echo 'source activate OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
 	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
 	echo 'source deactivate' >> ~/.bashrc
+RUN git clone https://github.com/opencv/opencv.git && \
+	cd opencv && \
+	git checkout $cvVersion && \
+	cd ..
+
+RUN git clone https://github.com/opencv/opencv_contrib.git && \
+	cd opencv_contrib && \
+	git checkout $cvVersion && \
+	cd ..
+
+WORKDIR $cwd/anaconda3/envs
+
+RUN mkdir OpenCV-"$cvVersion"-py2/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py2/include/* OpenCV-"$cvVersion"-py2/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py2/opencv_include/python2.7/* OpenCV-"$cvVersion"-py2/opencv_include && \
+	mkdir OpenCV-"$cvVersion"-py3/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py3/include/* OpenCV-"$cvVersion"-py3/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py3/opencv_include/python3.6m/* OpenCV-"$cvVersion"-py3/opencv_include
+
+RUN cd opencv && \
+	mkdir build && \
+	cd build && \
+	cmake -DCMAKE_BUILD_TYPE=RELEASE \
+	-DCMAKE_INSTALL_PREFIX=/usr/local \
+	-DINSTALL_C_EXAMPLES=ON \
+	-DWITH_TBB=ON \
+	-DWITH_V4L=ON \
+	-DWITH_QT=ON \
+	-DWITH_OPENGL=ON \
+	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+	-DPYTHON2_EXECUTABLE=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/bin/python \
+	-DPYTHON2_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/opencv_include \
+	-DPYTHON2_LIBRARY=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
+	-DPYTHON2_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
+	-DPYTHON2_PACKAGES=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
+	-DPYTHON3_EXECUTABLE=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/bin/python \
+	-DPYTHON3_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/opencv_include \
+	-DPYTHON3_LIBRARY=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
+	-DPYTHON3_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
+	-DPYTHON3_PACKAGES_PATH=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages .. && \
+	make -j4 && make install && \
+	cd ..
+
+RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+RUN ldconfig
+
+WORKDIR $cwd
+
+#RUN cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
+#RUN apt-get install -y vim
+#ENV PATH=$TMPPATH
+#RUN apt-get install -y nodejs \
+#	npm && \
+#	npm install -g configurable-http-proxy && \
+#	ln -s /usr/bin/nodejs /usr/bin/node
 
 ENV DEBIAN_FRONTEND teletype
