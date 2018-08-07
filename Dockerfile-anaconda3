@@ -80,7 +80,7 @@ RUN apt-get install -y wget && \
 	/opt/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
-RUN ["/bin/bash", "-c", "source /root/.bashrc"] && jupyter-kernelspec list
+RUN ["/bin/bash", "-c", "source /root/.bashrc"] && echo "Hello world"
 #	source activate OpenCV-"$cvVersion"-py2 && \
 #	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
 #	source deactivate && \
