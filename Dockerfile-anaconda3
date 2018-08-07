@@ -33,7 +33,9 @@ RUN apt-get update && \
 	libdc1394-22-dev \
 	libxine2-dev \
 	libv4l-dev \
-	vim
+	vim \
+	python-dev \
+	python3-dev
 
 RUN cd /usr/include/linux && \
 	ln -s -f ../libv4l1-videodev.h videodev.h && \
