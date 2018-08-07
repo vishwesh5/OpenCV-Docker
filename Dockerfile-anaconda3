@@ -71,12 +71,14 @@ RUN apt-get install -y wget && \
 	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
 	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
 	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b -p /opt/anaconda3 && \
-	conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
-	conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
-	conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
-	conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	conda install -y -c conda-forge jupyterhub==0.8.1" && \
+	echo 'export PATH=\"/opt/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
+	source ~/.bashrc && \
+	/opt/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
+	/opt/anaconda3/bin/conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
+	/opt/anaconda3/bin/conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	/opt/anaconda3/bin/conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
+	/opt/anaconda3/bin/conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	/opt/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
 	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
 RUN git clone https://github.com/opencv/opencv.git && \
