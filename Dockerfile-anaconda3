@@ -82,4 +82,8 @@ RUN apt-get install -y wget && \
 
 RUN ["/bin/bash", "-c", "source /root/.bashrc"]
 
+RUN /bin/bash -c "source activate OpenCV-\"$cvVersion\"-py2" && \
+	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
+	/bin/bash -c "source deactivate"
+
 ENV DEBIAN_FRONTEND teletype
