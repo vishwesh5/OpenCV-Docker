@@ -82,8 +82,7 @@ RUN apt-get install -y wget && \
 
 RUN ["/bin/bash", "-c", "source /root/.bashrc"]
 
-RUN  && \
-	source activate OpenCV-"$cvVersion"-py2 && \
+RUN source activate OpenCV-"$cvVersion"-py2 && \
 	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
 	source deactivate && \
 	source activate OpenCV-"$cvVersion"-py3 && \
