@@ -85,9 +85,11 @@ ENV PATH /bin/anaconda3/bin:$PATH
 ENV CONDA_DEFAULT_ENV OpenCV-"$cvVersion"-py2
 ENV CONDA_PREFIX /opt/anaconda3/envs/OpenCV-"$cvVersion"-py2
 
-RUN /bin/bash -c "source /root/.bashrc" && \
-	/bin/bash -c "source /opt/anaconda3/bin/activate OpenCV-\"$cvVersion\"-py2" && \
-	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
-	/bin/bash -c "source /opt/anaconda3/bin/deactivate"
+RUN echo 'source activate OpenCV-"$cvVersion"-py2' >> ~/.bashrc && \
+	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py2 >> ~/.bashrc && \
+	echo 'source deactivate' >> ~/.bashrc && \
+	echo 'source activate OpenCV-"$cvVersion"-py3' >> ~/.bashrc && \
+	echo 'python -m ipykernel install --name OpenCV-"$cvVersion"-py3 >> ~/.bashrc && \
+	echo 'source deactivate' >> ~/.bashrc
 
 ENV DEBIAN_FRONTEND teletype
