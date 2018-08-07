@@ -147,6 +147,6 @@ WORKDIR $cwd
 #	ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN /opt/anaconda3/bin/jupyterhub --generate-config && \
-	echo 'c.DockerSpawner.extra_create_kwargs = {"command": \'env PATH="/opt/anaconda3/bin:$PATH"\'}' >> jupyterhub_config.py
+	echo "c.DockerSpawner.extra_create_kwargs = {\"command": 'env PATH=\"/opt/anaconda3/bin:$PATH\"'}" >> jupyterhub_config.py
 
 ENV DEBIAN_FRONTEND teletype
