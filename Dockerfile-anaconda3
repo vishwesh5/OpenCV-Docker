@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Setup Environment Variable
 ENV cvVersionChoice=1
 ENV cvVersion="3.4.1"
-ENV cwd="/home/"
+ENV cwd="/opt"
 
 WORKDIR $cwd
 
@@ -32,7 +32,8 @@ RUN apt-get update && \
 	libswscale-dev \
 	libdc1394-22-dev \
 	libxine2-dev \
-	libv4l-dev
+	libv4l-dev \
+	vim
 
 RUN cd /usr/include/linux && \
 	ln -s -f ../libv4l1-videodev.h videodev.h && \
@@ -64,45 +65,19 @@ RUN apt-get install -y \
 	libhdf5-dev \
 	doxygen
 
-RUN apt-get install -y \
-	python-dev \
-	python-pip \
-	python3-dev \
-	python3-pip
+ENV PATH="/root/anaconda3/bin:$PATH"
 
-RUN pip2 install -U pip numpy && \
-	pip3 install -U pip numpy
-
-RUN apt-get install -y python3-testresources
-
-RUN python3 -m pip uninstall -y pip && \
-	apt install -y python3-pip --reinstall
-
-#RUN python -m pip uninstall pip && \
-#	apt install python-pip --reinstall
-
-RUN pip2 install -U virtualenv virtualenvwrapper && \
-	python3 -m pip install -U virtualenv virtualenvwrapper
-
-RUN python3 -m pip install -U jupyter jupyterhub==0.8.1 notebook
-
-RUN echo "# Virtual Environment Wrapper" >> ~/.bashrc && \
-	echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc && \
-	cd $cwd
-
-RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh && \
-	mkvirtualenv OpenCV-\"$cvVersion\"-py2 -p python2 && \
-	workon OpenCV-\"$cvVersion\"-py2 && \
-	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	pip install ipykernel && \
-	python -m ipykernel install --name OpenCV-$cvVersion-py2 && \
-	deactivate && \
-	mkvirtualenv OpenCV-\"$cvVersion\"-py3 -p python3 && \
-	workon OpenCV-\"$cvVersion\"-py3 && \
-	pip install numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	pip install ipykernel && \
-	python -m ipykernel install --name OpenCV-$cvVersion-py3 && \
-	deactivate"
+RUN apt-get install -y wget && \
+	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
+	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
+	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b -p /opt/anaconda3 && \
+	conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
+	conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
+	conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
+	conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	conda install -y -c conda-forge jupyterhub==0.8.1" && \
+	rm Anaconda3-5.2.0-Linux-x86_64.sh
 
 RUN git clone https://github.com/opencv/opencv.git && \
 	cd opencv && \
@@ -125,46 +100,30 @@ RUN cd opencv && \
 	-DWITH_QT=ON \
 	-DWITH_OPENGL=ON \
 	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-	-DBUILD_EXAMPLES=ON .. && \
+	-DPYTHON2_EXECUTABLE=/opt/anaconda3/envs/OpenCV-3.4.1-py2/bin/python \
+	-DPYTHON2_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-3.4.1-py2/include \
+	-DPYTHON2_LIBRARY=/opt/anaconda3/envs/OpenCV-3.4.1-py2/lib/libpython2.7.so \
+	-DPYTHON2_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-3.4.1-py2/lib/python2.7/site-packages/numpy/core/include \
+	-DPYTHON2_PACKAGES=/opt/anaconda3/envs/OpenCV-3.4.1-py2/lib/python2.7/site-packages \
+	-DPYTHON3_EXECUTABLE=/opt/anaconda3/envs/OpenCV-3.4.1-py3/bin/python \
+	-DPYTHON3_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-3.4.1-py3/include \
+	-DPYTHON3_LIBRARY=/opt/anaconda3/envs/OpenCV-3.4.1-py3/lib/libpython3.6m.so \
+	-DPYTHON3_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-3.4.1-py3/lib/python3.6/site-packages/numpy/core/include \
+	-DPYTHON3_PACKAGES_PATH=/opt/anaconda3/envs/OpenCV-3.4.1-py3/lib/python3.6/site-packages .. && \
 	make -j4 && make install && \
 	cd ..
 
 RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
-WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages
-RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so") && \
-	ln -s -f py2binPath cv2.so
-
-WORKDIR /root/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages
-RUN py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") && \
-	ln -s -f py3binPath cv2.so
-
 WORKDIR $cwd
-ENV TMPPATH="$PATH"
-ENV PATH="/root/anaconda3/bin:$PATH"
-#RUN apt-get install wget && \
-#	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
-#	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
-#	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-#	echo 'export PATH=\"/root/anaconda3/bin:$PATH\"' >> ~/.bashrc && \
-#	source ~/.bashrc && \
-#	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
-#	/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1"
 
-RUN apt-get install -y wget && \
-	wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh && \
-	chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh && \
-	/bin/bash -c "./Anaconda3-5.2.0-Linux-x86_64.sh -b && \
-	/root/anaconda3/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge" && \
-	#/root/anaconda3/bin/conda install -y -c conda-forge jupyterhub==0.8.1" && \
-	rm Anaconda3-5.2.0-Linux-x86_64.sh
-RUN cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
-RUN apt-get install -y vim
-ENV PATH=$TMPPATH
-RUN apt-get install -y nodejs \
-	npm && \
-	npm install -g configurable-http-proxy && \
-	ln -s /usr/bin/nodejs /usr/bin/node
+#RUN cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
+#RUN apt-get install -y vim
+#ENV PATH=$TMPPATH
+#RUN apt-get install -y nodejs \
+#	npm && \
+#	npm install -g configurable-http-proxy && \
+#	ln -s /usr/bin/nodejs /usr/bin/node
 
 ENV DEBIAN_FRONTEND teletype
