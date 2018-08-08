@@ -127,7 +127,6 @@ RUN cd opencv && \
 	-DWITH_QT=ON \
 	-DWITH_OPENGL=ON \
 	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-	-DBUILD_opencv_python2=OFF \
 	-DPYTHON2_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/bin/python \
 	-DPYTHON2_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/opencv_include \
 	-DPYTHON2_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
