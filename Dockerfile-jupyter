@@ -84,8 +84,8 @@ RUN 	conda create -y -f -n cling && \
 	source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py3 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3"
 	
-RUN	# Activate ipywidgets extension in the environment that runs the notebook server
-	jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
+# Activate ipywidgets extension in the environment that runs the notebook server
+RUN	jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
 	# Also activate ipywidgets extension for JupyterLab
 	jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.36.0 && \
 	jupyter labextension install jupyterlab_bokeh@^0.6.0 && \
