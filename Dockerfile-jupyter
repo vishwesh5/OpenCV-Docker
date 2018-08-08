@@ -73,7 +73,7 @@ RUN apt-get install -y \
 
 USER $NB_UID
 
-RUN 	conda create -y -f -n cling && \
+RUN 	conda install -y -n cling xeus-cling notebook -c QuantStack -c conda-forge && \
 	conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
 	conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
 	conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
@@ -81,8 +81,7 @@ RUN 	conda create -y -f -n cling && \
 
 USER root
 
-RUN	conda install -y -n cling xeus-cling notebook -c QuantStack -c conda-forge && \
-	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
+RUN	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
 	source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py3 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3"
