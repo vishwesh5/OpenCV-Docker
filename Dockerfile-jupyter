@@ -26,9 +26,12 @@ RUN apt-get update && \
 	git \
 	gfortran \
 	libjpeg8-dev \
-	libjasper-dev \
-	libpng12-dev \
-	libtiff5-dev \
+	libpng-dev \
+	software-properties-common && \
+	add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main" && \
+	apt -y update && \
+	apt -y install libjasper1 && \
+	apt-get -y install \
 	libtiff-dev \
 	libavcodec-dev \
 	libavformat-dev \
@@ -43,8 +46,8 @@ RUN cd /usr/include/linux && \
 	cd $cwd
 
 RUN apt-get install -y \
-	libgstreamer0.10-dev \
-	libgstreamer-plugins-base0.10-dev \
+	libgstreamer1.0-dev \
+	libgstreamer-plugins-base1.0-dev \
 	libgtk2.0-dev \
 	libtbb-dev \
 	qt5-default \
