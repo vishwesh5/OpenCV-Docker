@@ -79,13 +79,12 @@ RUN 	conda create -y -f -n cling && \
 	conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython && \
 	conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
 	conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython && \
-	source activate OpenCV-"$cvVersion"-py2 && \
-	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
-	source deactivate && \
-	source activate OpenCV-"$cvVersion"-py3 && \
-	python -m ipykernel install --name OpenCV-"$cvVersion"-py3 &&\
-	source deactivate && \
-	# Activate ipywidgets extension in the environment that runs the notebook server
+	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
+	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
+	source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py3 && \
+	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3"
+	
+RUN	# Activate ipywidgets extension in the environment that runs the notebook server
 	jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
 	# Also activate ipywidgets extension for JupyterLab
 	jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.36.0 && \
