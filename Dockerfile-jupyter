@@ -88,16 +88,7 @@ RUN 	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 
 USER $NB_UID
 
-# Activate ipywidgets extension in the environment that runs the notebook server
-RUN	jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-	# Also activate ipywidgets extension for JupyterLab
-	jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.36.0 && \
-	jupyter labextension install jupyterlab_bokeh@^0.6.0 && \
-	npm cache clean --force && \
-	rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
-	rm -rf /home/$NB_USER/.cache/yarn && \
-	rm -rf /home/$NB_USER/.node-gyp && \
-	fix-permissions $CONDA_DIR && \
+RUN	fix-permissions $CONDA_DIR && \
 	fix-permissions /home/$NB_USER
 
 USER root
