@@ -111,7 +111,7 @@ RUN git clone https://github.com/opencv/opencv_contrib.git && \
 	git checkout $cvVersion && \
 	cd ..
 
-WORKDIR $cwd/anaconda3/envs
+WORKDIR $CONDA_DIR
 
 RUN mkdir OpenCV-"$cvVersion"-py2/opencv_include && \
 	cp -r OpenCV-"$cvVersion"-py2/include/* OpenCV-"$cvVersion"-py2/opencv_include && \
@@ -134,16 +134,16 @@ RUN cd opencv && \
 	-DWITH_OPENGL=ON \
 	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
 	-DBUILD_opencv_python2=OFF \
-	-DPYTHON2_EXECUTABLE=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/bin/python \
-	-DPYTHON2_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/opencv_include \
-	-DPYTHON2_LIBRARY=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
-	-DPYTHON2_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
-	-DPYTHON2_PACKAGES=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
-	-DPYTHON3_EXECUTABLE=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/bin/python \
-	-DPYTHON3_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/opencv_include \
-	-DPYTHON3_LIBRARY=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
-	-DPYTHON3_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
-	-DPYTHON3_PACKAGES_PATH=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages .. && \
+	-DPYTHON2_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/bin/python \
+	-DPYTHON2_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/opencv_include \
+	-DPYTHON2_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
+	-DPYTHON2_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
+	-DPYTHON2_PACKAGES=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
+	-DPYTHON3_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/bin/python \
+	-DPYTHON3_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/opencv_include \
+	-DPYTHON3_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
+	-DPYTHON3_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
+	-DPYTHON3_PACKAGES_PATH=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages .. && \
 	make -j4 && make install && \
 	cd ..
 
@@ -163,7 +163,7 @@ WORKDIR $cwd
 #RUN /opt/anaconda3/bin/jupyterhub --generate-config && \
 #	echo "c.DockerSpawner.extra_create_kwargs = {\"command\": 'env PATH=\"/opt/anaconda3/bin:$PATH\"'}" >> jupyterhub_config.py
 
-ENV PATH /opt/anaconda3/bin:$PATH
+ENV PATH $CONDA_DIR/bin:$PATH
 
 USER $NB_UID
 
