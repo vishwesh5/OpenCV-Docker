@@ -78,15 +78,12 @@ RUN 	conda create -y -f -n cling && \
 	conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
 	conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
 	conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
-	conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel
-	
-USER root
-RUN 	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
+	conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
+	conda install -c conda-forge jupyterhub==v0.8.1 && \
+	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
 	source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py3 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3"
-
-USER $NB_UID
 
 RUN	fix-permissions $CONDA_DIR && \
 	fix-permissions /home/$NB_USER
