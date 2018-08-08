@@ -1,0 +1,167 @@
+# Stand on the shoulders of giants
+FROM jupyter/minimal-notebook
+
+LABEL maintainer="Vishwesh Ravi Shrimali <vishweshshrimali5@gmail.com>"
+
+USER root
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# Setup Environment Variable
+ENV cvVersionChoice=1
+ENV cvVersion="3.4.1"
+ENV cwd="/opt"
+
+WORKDIR $cwd
+
+RUN apt-get update && \
+	apt-get remove -y \
+	x264 libx264-dev && \
+	apt-get install -y \
+	build-essential \
+	checkinstall \
+	cmake \
+	pkg-config \
+	yasm \
+	git \
+	gfortran \
+	libjpeg8-dev \
+	libjasper-dev \
+	libpng12-dev \
+	libtiff5-dev \
+	libtiff-dev \
+	libavcodec-dev \
+	libavformat-dev \
+	libswscale-dev \
+	libdc1394-22-dev \
+	libxine2-dev \
+	libv4l-dev \
+	vim
+
+RUN cd /usr/include/linux && \
+	ln -s -f ../libv4l1-videodev.h videodev.h && \
+	cd $cwd
+
+RUN apt-get install -y \
+	libgstreamer0.10-dev \
+	libgstreamer-plugins-base0.10-dev \
+	libgtk2.0-dev \
+	libtbb-dev \
+	qt5-default \
+	libatlas-base-dev \
+	libfaac-dev \
+	libmp3lame-dev \
+	libtheora-dev \
+	libvorbis-dev \
+	libxvidcore-dev \
+	libopencore-amrnb-dev \
+	libopencore-amrwb-dev \
+	libavresample-dev \
+	x264 \
+	v4l-utils \
+	libprotobuf-dev \
+	protobuf-compiler \
+	libgoogle-glog-dev \
+	libgflags-dev \
+	libgphoto2-dev \
+	libeigen3-dev \
+	libhdf5-dev \
+	doxygen
+
+USER $NB_UID
+
+RUN 	conda create -y -f -n cling && \
+	conda install -y -n cling xeus-cling notebook -c QuantStack -c conda-forge && \
+	conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
+	conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
+	conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython && \
+	source activate OpenCV-"$cvVersion"-py2 && \
+	python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
+	source deactivate && \
+	source activate OpenCV-"$cvVersion"-py3 && \
+	python -m ipykernel install --name OpenCV-"$cvVersion"-py3 &&\
+	source deactivate && \
+	# Activate ipywidgets extension in the environment that runs the notebook server
+	jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
+	# Also activate ipywidgets extension for JupyterLab
+	jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.36.0 && \
+	jupyter labextension install jupyterlab_bokeh@^0.6.0 && \
+	npm cache clean --force && \
+	rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
+	rm -rf /home/$NB_USER/.cache/yarn && \
+	rm -rf /home/$NB_USER/.node-gyp && \
+	fix-permissions $CONDA_DIR && \
+	fix-permissions /home/$NB_USER
+
+USER root
+
+WORKDIR $cwd
+
+RUN git clone https://github.com/opencv/opencv.git && \
+	cd opencv && \
+	git checkout $cvVersion && \
+	cd ..
+
+RUN git clone https://github.com/opencv/opencv_contrib.git && \
+	cd opencv_contrib && \
+	git checkout $cvVersion && \
+	cd ..
+
+WORKDIR $cwd/anaconda3/envs
+
+RUN mkdir OpenCV-"$cvVersion"-py2/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py2/include/* OpenCV-"$cvVersion"-py2/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py2/opencv_include/python2.7/* OpenCV-"$cvVersion"-py2/opencv_include && \
+	mkdir OpenCV-"$cvVersion"-py3/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py3/include/* OpenCV-"$cvVersion"-py3/opencv_include && \
+	cp -r OpenCV-"$cvVersion"-py3/opencv_include/python3.6m/* OpenCV-"$cvVersion"-py3/opencv_include
+
+WORKDIR $cwd
+
+RUN cd opencv && \
+	mkdir build && \
+	cd build && \
+	cmake -DCMAKE_BUILD_TYPE=RELEASE \
+	-DCMAKE_INSTALL_PREFIX=/usr/local \
+	-DINSTALL_C_EXAMPLES=ON \
+	-DWITH_TBB=ON \
+	-DWITH_V4L=ON \
+	-DWITH_QT=ON \
+	-DWITH_OPENGL=ON \
+	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+	-DBUILD_opencv_python2=OFF \
+	-DPYTHON2_EXECUTABLE=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/bin/python \
+	-DPYTHON2_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/opencv_include \
+	-DPYTHON2_LIBRARY=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
+	-DPYTHON2_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
+	-DPYTHON2_PACKAGES=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
+	-DPYTHON3_EXECUTABLE=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/bin/python \
+	-DPYTHON3_INCLUDE_DIR=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/opencv_include \
+	-DPYTHON3_LIBRARY=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
+	-DPYTHON3_NUMPY_INCLUDE_DIRS=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
+	-DPYTHON3_PACKAGES_PATH=/opt/anaconda3/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages .. && \
+	make -j4 && make install && \
+	cd ..
+
+RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+RUN ldconfig
+
+WORKDIR $cwd
+
+#RUN cp -r ~/anaconda3/share/jupyter/kernels/xeus-cling-cpp1* /usr/local/share/jupyter/kernels/
+#RUN apt-get install -y vim
+#ENV PATH=$TMPPATH
+#RUN apt-get install -y nodejs \
+#	npm && \
+#	npm install -g configurable-http-proxy && \
+#	ln -s /usr/bin/nodejs /usr/bin/node
+
+#RUN /opt/anaconda3/bin/jupyterhub --generate-config && \
+#	echo "c.DockerSpawner.extra_create_kwargs = {\"command\": 'env PATH=\"/opt/anaconda3/bin:$PATH\"'}" >> jupyterhub_config.py
+
+ENV PATH /opt/anaconda3/bin:$PATH
+
+USER $NB_UID
+
+ENV DEBIAN_FRONTEND teletype
