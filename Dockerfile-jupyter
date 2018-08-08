@@ -85,7 +85,8 @@ USER root
 RUN	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
 	source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py3 && \
-	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3"
+	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3 && \
+	chown $NB_UID:$NB_UID ~/.local/share/jupyter"
 
 USER $NB_UID
 
