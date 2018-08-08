@@ -105,7 +105,7 @@ RUN git clone https://github.com/opencv/opencv_contrib.git && \
 	git checkout $cvVersion && \
 	cd ..
 
-WORKDIR $CONDA_DIR
+WORKDIR $CONDA_DIR/envs/
 
 RUN mkdir OpenCV-"$cvVersion"-py2/opencv_include && \
 	cp -r OpenCV-"$cvVersion"-py2/include/* OpenCV-"$cvVersion"-py2/opencv_include && \
