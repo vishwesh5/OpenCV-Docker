@@ -87,7 +87,9 @@ RUN	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py2 && \
 	source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py3 && \
 	python -m ipykernel install --name OpenCV-\"$cvVersion\"-py3 && \
-	jupyter serverextension enable --py nbgitpuller --sys-prefix"		
+	jupyter serverextension enable --py nbgitpuller --sys-prefix"
+
+RUN 	chown $NB_UID $CONDA_DIR
 
 USER $NB_UID
 
