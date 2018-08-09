@@ -23,6 +23,7 @@ RUN apt-get update && \
 	cmake \
 	pkg-config \
 	yasm \
+	unzip \
 	git \
 	gfortran \
 	libjpeg8-dev \
