@@ -153,8 +153,8 @@ RUN ldconfig
 
 # Install dlib
 RUN 	wget http://dlib.net/files/dlib-19.15.tar.bz2 && \
-	tar xvf dlib-19.16.tar.bz2 && \
-	cd dlib-19.16 && \
+	tar xvf dlib-19.15.tar.bz2 && \
+	cd dlib-19.15 && \
 	mkdir build && \
 	cd build && \
 	cmake .. && \
