@@ -1,0 +1,12 @@
+proxy:
+    secretToken: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+singleuser:
+    image:
+        name: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        tag: version10
+    lifecycleHooks:
+        postStart:
+            exec:
+                command: ["wget","https://github.com/udacity/machine-learning/archive/master.zip"]
+                command: ["unzip","master.zip"]
+                command: ["rm","master.zip"]
