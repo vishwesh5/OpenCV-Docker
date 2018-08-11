@@ -1,9 +1,9 @@
 proxy:
-    secretToken: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    secretToken: "6c2576424c330a926bf2193a88f237699ba2cd8c9317ecf374249128203519ca"
 singleuser:
     image:
-        name: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        tag: version10
+        name: gcr.io/eng-spot-212108/test-cv4faces-image
+        tag: version11
     lifecycleHooks:
         postStart:
             exec:
