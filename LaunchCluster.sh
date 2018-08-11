@@ -34,6 +34,6 @@ helm install jupyterhub/jupyterhub \
 
 kubectl --namespace=$releaseName get pod
 
-wait 10s
+sleep 10s
 
 kubectl --namespace=$releaseName get svc
