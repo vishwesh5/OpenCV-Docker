@@ -172,7 +172,7 @@ RUN	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python $cwd/dlib-19.16/setup.py install && \
 	rm -rf $cwd/dlib-19.16/dist && \
 	rm -rf $cwd/dlib-19.16/tools/python/build && \
-	rm $cwd/dlib-19.16/python_examples/dlib.so
+	rm $cwd/dlib-19.16/python_examples/dlib.so"
 
 WORKDIR $cwd
 
