@@ -152,6 +152,7 @@ RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
 # Install dlib
+
 RUN 	wget http://dlib.net/files/dlib-19.15.tar.bz2 && \
 	tar xvf dlib-19.15.tar.bz2 && \
 	cd dlib-19.15 && \
@@ -162,6 +163,8 @@ RUN 	wget http://dlib.net/files/dlib-19.15.tar.bz2 && \
 	make install && \
 	ldconfig && \
 	cd ..
+
+WORKDIR $cwd/dlib-19.15
 
 RUN	/bin/bash -c "source $CONDA_DIR/bin/activate OpenCV-\"$cvVersion\"-py2 && \
 	python $cwd/dlib-19.15/setup.py install && \
