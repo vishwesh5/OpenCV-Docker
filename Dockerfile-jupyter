@@ -152,6 +152,13 @@ RUN cd opencv && \
 RUN /bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
+RUN py2binPath=$(find /usr/local/lib/ -type f -name "cv2.so") &&
+	py3binPath=$(find /usr/local/lib/ -type f -name "cv2.cpython*.so") &&
+	cd /opt/conda/envs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages &&
+	ln -f -s $py2binPath cv2.so &&
+	cd /opt/conda/envs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages &&
+	ln -f -s $py3binPath cv2.so
+
 WORKDIR $cwd
 
 # Install dlib
