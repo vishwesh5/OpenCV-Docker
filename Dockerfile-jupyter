@@ -196,7 +196,8 @@ USER root
 #RUN	chown $NB_USER $CONDA_DIR
 RUN     chown $NB_USER:$NB_GID $CONDA_DIR
 
-RUN rm /opt/conda/envs/OpenCV-3.4.1-py3/lib/libfontconfig.so.1
+RUN rm /opt/conda/envs/OpenCV-3.4.1-py3/lib/libfontconfig.so.1 && \
+	rm /opt/conda/envs/OpenCV-3.4.1-py2/lib/libfontconfig.so.1
 
 USER $NB_UID
 
