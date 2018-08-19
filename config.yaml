@@ -3,10 +3,10 @@ proxy:
 singleuser:
     image:
         name: gcr.io/eng-spot-212108/test-cv4faces-image
-        tag: version11
+        tag: version12
     lifecycleHooks:
         postStart:
             exec:
                 command: ["wget","https://github.com/udacity/machine-learning/archive/master.zip"]
-                command: ["unzip","master.zip"]
-                command: ["rm","master.zip"]
+#                command: ["unzip","master.zip"]
+#                command: ["rm","master.zip"]
