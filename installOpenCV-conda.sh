@@ -40,6 +40,7 @@ sudo apt-get -y remove x264 libx264-dev
 sudo apt-get -y install build-essential checkinstall cmake pkg-config yasm
 sudo apt-get -y install git gfortran
 sudo apt-get -y install libjpeg8-dev libjasper-dev libpng12-dev
+sudo apt-get -y install uuid uuid-dev
 
 sudo apt-get -y install libtiff5-dev
 
@@ -71,12 +72,14 @@ wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh
 chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh
 ./Anaconda3-5.2.0-Linux-x86_64.sh -b -p ~/anaconda3
 echo 'PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
+echo 'export LD_CONFIG_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_CONFIG_PATH' >> ~/.bashrc
 source ~/.bashrc
 #CONDA_DIR=$(which conda)
 #echo $CONDA_DIR
 #CONDA_DIR=${CONDA_DIR:0:${#CONDA_DIR}-10}
 #echo $CONDA_DIR
 CONDA_DIR=~/anaconda3
+#LD_CONFIG_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_CONFIG_PATH
 ######### VERBOSE ON ##########
 
 echo "Complete"
@@ -89,10 +92,10 @@ conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image 
 conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
 conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
 source activate OpenCV-"$cvVersion"-py2 && \
-python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
+python -m ipykernel install --name OpenCV-"$cvVersion"-py2 --user && \
 source deactivate && \
-source activate OpenCV-"$cvVersion"-py2 && \
-python -m ipykernel install --name OpenCV-"$cvVersion"-py2 && \
+source activate OpenCV-"$cvVersion"-py3 && \
+python -m ipykernel install --name OpenCV-"$cvVersion"-py3 --user && \
 source deactivate
 
 echo "================================"
@@ -112,6 +115,7 @@ git checkout $cvVersion
 cd ..
 echo "================================"
 echo "Complete"
+
 
 # Step 5: Compile and install OpenCV with contrib modules
 echo "================================"
