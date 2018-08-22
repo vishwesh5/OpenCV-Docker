@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 ############## WELCOME #############
 # Clean build directories
@@ -34,7 +34,6 @@ echo "Complete"
 
 # Step 2: Install OS libraries
 echo "Installing OS libraries"
-
 sudo apt-get -y remove x264 libx264-dev
 
 ## Install dependencies
@@ -73,9 +72,11 @@ chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh
 ./Anaconda3-5.2.0-Linux-x86_64.sh -b -p ~/anaconda3
 echo 'PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
-CONDA_DIR=$(which conda)
-CONDA_DIR=${CONDA_DIR:0:${#CONDA_DIR}-10}
-
+#CONDA_DIR=$(which conda)
+#echo $CONDA_DIR
+#CONDA_DIR=${CONDA_DIR:0:${#CONDA_DIR}-10}
+#echo $CONDA_DIR
+CONDA_DIR=~/anaconda3
 ######### VERBOSE ON ##########
 
 echo "Complete"
@@ -141,17 +142,19 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D BUILD_EXAMPLES=ON ..
 
 make -j4
-sudo make install
+make install
+/bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+ldconfig
 
 # Create symlink in virtual environment
 py2binPath=$(find $cwd/installation/OpenCV-$cvVersion/lib/ -type f -name "cv2.so")
 py3binPath=$(find $cwd/installation/OpenCV-$cvVersion/lib/ -type f -name "cv2.cpython*.so")
 
 # Link the binary python file
-cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages/
+cd $CONDA_DIR/envs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages/
 ln -f -s $py2binPath cv2.so
 
-cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages/
+cd $CONDA_DIR/envs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages/
 ln -f -s $py3binPath cv2.so
 
 # Install dlib
@@ -167,19 +170,19 @@ mkdir build && \
 cd build && \
 cmake .. && \
 make && \
-make install && \
+sudo make install && \
 ldconfig && \
 cd ..
 
 cd $cwd/dlib-19.15
 
-source activate OpenCV-"$cvVersion"-py2 
-python setup.py install 
+source activate OpenCV-"$cvVersion"-py2
+python setup.py install
 rm -rf $cwd/dlib-19.15/dist
 rm -rf $cwd/dlib-19.15/tools/python/build
 source deactivate
-source activate OpenCV-"$cvVersion"-py2 
-python setup.py install 
+source activate OpenCV-"$cvVersion"-py2
+python setup.py install
 rm -rf $cwd/dlib-19.15/dist
 rm -rf $cwd/dlib-19.15/tools/python/build
 source deactivate
@@ -195,7 +198,7 @@ echo "import cv2"
 echo "cv2.__version__"
 
 if [ $cvVersionChoice -eq 2 ]; then
-	       echo "The output should be 4.0.0-pre"
+               echo "The output should be 4.0.0-pre"
 else
                echo The output should be "$cvVersion"
 fi
@@ -216,3 +219,5 @@ fi
 echo "deactivate"
 
 echo "Installation completed successfully"
+
+cd $cwd
