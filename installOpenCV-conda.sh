@@ -1,11 +1,6 @@
 #!/bin/bash
 
 ############## WELCOME #############
-CONDA_DIR=$(which conda)
-CONDA_DIR=${CONDA_DIR:0:${#CONDA_DIR}-10}
-
-######### VERBOSE ON ##########
-
 # Clean build directories
 rm -rf opencv/build
 rm -rf opencv_contrib/build
@@ -69,8 +64,19 @@ sudo apt-get -y install x264 v4l-utils
 # Optional dependencies
 sudo apt-get -y install libprotobuf-dev protobuf-compiler
 sudo apt-get -y install libgoogle-glog-dev libgflags-dev
-sudo apt-get -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
+sudo apt-get -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen wget vim
 echo "================================"
+
+# Install Anaconda 3
+wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh
+chmod u+x Anaconda3-5.2.0-Linux-x86_64.sh
+./Anaconda3-5.2.0-Linux-x86_64.sh -b -p ~/anaconda3
+echo 'PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+CONDA_DIR=$(which conda)
+CONDA_DIR=${CONDA_DIR:0:${#CONDA_DIR}-10}
+
+######### VERBOSE ON ##########
 
 echo "Complete"
 
@@ -135,7 +141,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D BUILD_EXAMPLES=ON ..
 
 make -j4
-make install
+sudo make install
 
 # Create symlink in virtual environment
 py2binPath=$(find $cwd/installation/OpenCV-$cvVersion/lib/ -type f -name "cv2.so")
@@ -151,6 +157,8 @@ ln -f -s $py3binPath cv2.so
 # Install dlib
 echo "================================"
 echo "Installing dlib"
+
+cd $cwd
 
 wget http://dlib.net/files/dlib-19.15.tar.bz2 && \
 tar xvf dlib-19.15.tar.bz2 && \
