@@ -4,6 +4,7 @@
 # Clean build directories
 rm -rf opencv/build
 rm -rf opencv_contrib/build
+rm -rf installation
 
 # Step 0: Take inputs
 echo "OpenCV installation by learnOpenCV.com"
@@ -92,16 +93,16 @@ $CONDA_DIR/bin/conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotli
 source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py2 && \
 python -m ipykernel install --name OpenCV-"$cvVersion"-py2 --user && \
 source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py3 && \
-python -m ipykernel install --name OpenCV-"$cvVersion"-py3 --user && \
+python -m ipykernel install --name OpenCV-"$cvVersion"-py3 --user
 #source deactivate
 
 cd $CONDA_DIR/envs/
 mkdir OpenCV-"$cvVersion"-py2/opencv_include && \
-	cp -r OpenCV-"$cvVersion"-py2/include/* OpenCV-"$cvVersion"-py2/opencv_include && \
-	cp -r OpenCV-"$cvVersion"-py2/opencv_include/python2.7/* OpenCV-"$cvVersion"-py2/opencv_include && \
-	mkdir OpenCV-"$cvVersion"-py3/opencv_include && \
-	cp -r OpenCV-"$cvVersion"-py3/include/* OpenCV-"$cvVersion"-py3/opencv_include && \
-	cp -r OpenCV-"$cvVersion"-py3/opencv_include/python3.6m/* OpenCV-"$cvVersion"-py3/opencv_include
+cp -r OpenCV-"$cvVersion"-py2/include/* OpenCV-"$cvVersion"-py2/opencv_include && \
+cp -r OpenCV-"$cvVersion"-py2/opencv_include/python2.7/* OpenCV-"$cvVersion"-py2/opencv_include && \
+mkdir OpenCV-"$cvVersion"-py3/opencv_include && \
+cp -r OpenCV-"$cvVersion"-py3/include/* OpenCV-"$cvVersion"-py3/opencv_include && \
+cp -r OpenCV-"$cvVersion"-py3/opencv_include/python3.6m/* OpenCV-"$cvVersion"-py3/opencv_include
 
 cd $cwd
 
@@ -127,36 +128,64 @@ echo "Complete"
 # Step 5: Compile and install OpenCV with contrib modules
 echo "================================"
 echo "Compiling and installing OpenCV with contrib modules"
+mkdir installation
+cd installation
+mkdir OpenCV-"$cvVersion"
+cd $cwd
 cd opencv
 mkdir build
 cd build
 
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
--D CMAKE_INSTALL_PREFIX=$cwd/installation/OpenCV-$cvVersion \
--D INSTALL_C_EXAMPLES=ON \
--D INSTALL_PYTHON_EXAMPLES=ON \
--D WITH_TBB=ON \
--D WITH_V4L=ON \
--D WITH_QT=ON \
--D WITH_OPENGL=ON \
--D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
--DPYTHON2_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/bin/python \
--DPYTHON2_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/opencv_include \
--DPYTHON2_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
--DPYTHON2_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
--DPYTHON2_PACKAGES=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
--DPYTHON3_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/bin/python \
--DPYTHON3_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/opencv_include \
--DPYTHON3_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
--DPYTHON3_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
--DPYTHON3_PACKAGES_PATH=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages \
--D BUILD_EXAMPLES=ON ..
+if [ "$cvVersionChoice" -eq 2 ]; then
+        cmake -DCMAKE_BUILD_TYPE=RELEASE \
+	-DCMAKE_INSTALL_PREFIX=../../installation/OpenCV-"$cvVersion" \
+	-DINSTALL_C_EXAMPLES=ON \
+	-DBUILD_EXAMPLES=ON \
+	-DWITH_TBB=ON \
+	-DWITH_V4L=ON \
+	-DWITH_QT=ON \
+	-DWITH_OPENGL=ON \
+	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+	-DPYTHON2_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/bin/python \
+	-DPYTHON2_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/opencv_include \
+	-DPYTHON2_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
+	-DPYTHON2_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
+	-DPYTHON2_PACKAGES=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
+	-DPYTHON3_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/bin/python \
+	-DPYTHON3_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/opencv_include \
+	-DPYTHON3_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
+	-DPYTHON3_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
+	-DPYTHON3_PACKAGES_PATH=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages ..
+
+else
+        cmake -DCMAKE_BUILD_TYPE=RELEASE \
+	-DCMAKE_INSTALL_PREFIX=../../installation/OpenCV-"$cvVersion" \
+	-DINSTALL_C_EXAMPLES=ON \
+	-DENABLE_CXX11=ON \
+	-DBUILD_EXAMPLES=ON \
+	-DWITH_TBB=ON \
+	-DWITH_V4L=ON \
+	-DWITH_QT=ON \
+	-DWITH_OPENGL=ON \
+	-DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+	-DPYTHON2_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/bin/python \
+	-DPYTHON2_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/opencv_include \
+	-DPYTHON2_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/libpython2.7.so \
+	-DPYTHON2_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages/numpy/core/include \
+	-DPYTHON2_PACKAGES=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py2/lib/python2.7/site-packages \
+	-DPYTHON3_EXECUTABLE=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/bin/python \
+	-DPYTHON3_INCLUDE_DIR=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/opencv_include \
+	-DPYTHON3_LIBRARY=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/libpython3.6m.so \
+	-DPYTHON3_NUMPY_INCLUDE_DIRS=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages/numpy/core/include \
+	-DPYTHON3_PACKAGES_PATH=$CONDA_DIR/envs/OpenCV-"$cvVersion"-py3/lib/python3.6/site-packages ..
+
+fi
 
 make -j4
-make install
-/bin/sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
-ldconfig
-cd ..
+sudo make install
+sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+sudo ldconfig
+cd ../..
 
 # Create symlink in virtual environment
 py2binPath=$(find $cwd/installation/OpenCV-$cvVersion/lib/ -type f -name "cv2.so")
@@ -183,7 +212,7 @@ cd build && \
 cmake .. && \
 make && \
 sudo make install && \
-ldconfig && \
+sudo ldconfig && \
 cd ..
 
 cd $cwd/dlib-19.15
@@ -192,21 +221,19 @@ source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py2
 python setup.py install
 rm -rf $cwd/dlib-19.15/dist
 rm -rf $cwd/dlib-19.15/tools/python/build
-source deactivate
-source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py2
+source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py3
 python setup.py install
 rm -rf $cwd/dlib-19.15/dist
 rm -rf $cwd/dlib-19.15/tools/python/build
-source deactivate
-
 
 # Print instructions
 echo "================================"
 echo "Installation completed successfully"
 
-rm $CONDA_DIR/envs/OpenCV-3.4.1-py3/lib/libfontconfig.so.1 && \
-	rm $CONDA_DIR/envs/OpenCV-3.4.1-py2/lib/libfontconfig.so.1
+#rm $CONDA_DIR/envs/OpenCV-3.4.1-py3/lib/libfontconfig.so.1 && \
+#rm $CONDA_DIR/envs/OpenCV-3.4.1-py2/lib/libfontconfig.so.1
 cd $cwd
 echo 'PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
+#echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 source ~/.bashrc
