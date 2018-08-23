@@ -87,9 +87,9 @@ echo "Complete"
 # Step 3: Install Python libraries
 $CONDA_DIR/bin/conda install -y xeus-cling notebook -c QuantStack -c conda-forge && \
 $CONDA_DIR/bin/conda create -y -f -n OpenCV-"$cvVersion"-py2 python=2.7 anaconda && \
-$CONDA_DIR/bin/conda install -y -n OpenCV-"$cvVersion"-py2 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
+$CONDA_DIR/bin/conda install -y -n OpenCV-"$cvVersion"-py2 numpy==1.14.0 scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
 $CONDA_DIR/bin/conda create -y -f -n OpenCV-"$cvVersion"-py3 python=3.6 anaconda && \
-$CONDA_DIR/bin/conda install -y -n OpenCV-"$cvVersion"-py3 numpy scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
+$CONDA_DIR/bin/conda install -y -n OpenCV-"$cvVersion"-py3 numpy==1.14.0 scipy matplotlib scikit-image scikit-learn ipython ipykernel && \
 source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py2 && \
 python -m ipykernel install --name OpenCV-"$cvVersion"-py2 --user && \
 source $CONDA_DIR/bin/activate OpenCV-"$cvVersion"-py3 && \
@@ -237,3 +237,14 @@ echo 'PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
 #echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 source ~/.bashrc
+
+source activate OpenCV-"$cvVersion"-py2
+pip install numpy==1.14.0
+pip install argparse==1.1 msgpack
+pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.10.0-cp27-none-linux_x86_64.whl
+source deactivate
+source activate OpenCV-"$cvVersion"-py3
+pip install numpy==1.14.0
+pip install argparse==1.1 msgpack
+pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+source deactivate
