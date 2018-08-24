@@ -238,6 +238,8 @@ echo 'PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
 echo 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:~/anaconda3/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 source ~/.bashrc
 
+# Install tensorflow
+
 source activate OpenCV-"$cvVersion"-py2
 pip install numpy==1.14.0
 pip install argparse==1.1 msgpack
@@ -248,3 +250,18 @@ pip install numpy==1.14.0
 pip install argparse==1.1 msgpack
 pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
 source deactivate
+
+# Install darknet
+cd $cwd
+git clone https://github.com/pjreddie/darknet.git
+cd darknet
+make
+
+# Install GOTURN
+sudo apt-get -y install libtinyxml-dev 
+# For Ubuntu >= 17.04
+# sudo apt -y install caffe-cpu
+# For Ubuntu < 17.04
+sudo apt-get -y install libprotobuf-dev libleveldb-dev libsnappy-dev libhdf5-serial-dev protobuf-compiler
+sudo apt-get -y install --no-install-recommends libboost-all-dev
+
