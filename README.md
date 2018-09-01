@@ -67,14 +67,19 @@ The terminal does several things to set up Docker Toolbox for you. When it is do
 
 To use the docker image, use the following instructions:
 
-For **OpenCV-master branch**:
-`docker pull vishwesh5/cv-docker:cv-4`
+For **OpenCV-3.4.1**:
+`docker pull spmallick/opencv-docker:opencv-3.4.1`
 
-`docker run -it -p 8888:8888 -p 5000:5000 vishwesh5/cv-docker:cv-4 /bin/bash`
+`docker run -it -p 8888:8888 -p 5000:5000 spmallick/opencv-docker /bin/bash`
+
+For **OpenCV-4.0.0**:
+`docker pull spmallick/opencv-docker:opencv-4`
+
+`docker run -it -p 8888:8888 -p 5000:5000 spmallick/opencv-docker:opencv-4 /bin/bash`
 
 To use Python environments:
 
-`source activate OpenCV-master-py2`
+`source activate OpenCV-3.4.1-py2`
 `ipython`
 `import cv2`
 `cv2.__version__`
@@ -83,16 +88,18 @@ To use Python environments:
 
 Similarly for Python 3.6,
 
-`source activate OpenCV-master-py3`
+`source activate OpenCV-3.4.1-py3`
 `ipython`
 `import cv2`
 `cv2.__version__`
 `exit()`
 `source deactivate`
 
+For **OpenCV-4.0.0** installation, replace **`OpenCV-3.4.1-py2`** with **`OpenCV-master-py2`** and **`OpenCV-3.4.1-py3`** with **`OpenCV-master-py3`**.
+
 The image also has **dlib** installed for both Python environments. 
 
-`source activate OpenCV-master-py2`
+`source activate OpenCV-3.4.1-py2`
 `ipython`
 `import dlib`
 `dlib.__version__`
