@@ -80,19 +80,29 @@ For **OpenCV-4.0.0**:
 To use Python environments:
 
 `source activate OpenCV-3.4.1-py2`
+
 `ipython`
+
 `import cv2`
+
 `cv2.__version__`
+
 `exit()`
+
 `source deactivate`
 
 Similarly for Python 3.6,
 
 `source activate OpenCV-3.4.1-py3`
+
 `ipython`
+
 `import cv2`
+
 `cv2.__version__`
+
 `exit()`
+
 `source deactivate`
 
 For **OpenCV-4.0.0** installation, replace **`OpenCV-3.4.1-py2`** with **`OpenCV-master-py2`** and **`OpenCV-3.4.1-py3`** with **`OpenCV-master-py3`**.
@@ -100,8 +110,13 @@ For **OpenCV-4.0.0** installation, replace **`OpenCV-3.4.1-py2`** with **`OpenCV
 The image also has **dlib** installed for both Python environments. 
 
 `source activate OpenCV-3.4.1-py2`
+
 `ipython`
+
 `import dlib`
+
 `dlib.__version__`
+
 `exit()`
+
 `source deactivate`
