@@ -7,23 +7,23 @@ Now, let's see how we can install Docker and the Docker image for OpenCV - 4.0.0
 # Docker Installation
 
 ## Ubuntu
-To install docker on Ubuntu 16.04, first add the GPG key for the official Docker repository to the system:
+1. To install docker on Ubuntu 16.04, first add the GPG key for the official Docker repository to the system:
 
 `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
 
-Add the Docker repository to APT sources:
+2. Add the Docker repository to APT sources:
 
 `sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"`
 
-Next, update the package database with the Docker packages from the newly added repo:
+3. Next, update the package database with the Docker packages from the newly added repo:
 
 `sudo apt-get update`
 
-Make sure you are about to install from the Docker repo instead of the default Ubuntu 16.04 repo:
+4. Make sure you are about to install from the Docker repo instead of the default Ubuntu 16.04 repo:
 
 `apt-cache policy docker-ce`
 
-You should see output similar to the follow:
+5. You should see output similar to the follow:
 
 ```docker-ce:
   Installed: (none)
@@ -34,7 +34,7 @@ You should see output similar to the follow:
      17.03.0~ce-0~ubuntu-xenial 500
         500 https://download.docker.com/linux/ubuntu xenial/stable amd64 Packages
 ```
-Finally, install Docker:
+6. Finally, install Docker:
 
 `sudo apt-get install -y docker-ce`
 
