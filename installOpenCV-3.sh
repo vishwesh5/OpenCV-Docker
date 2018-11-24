@@ -50,7 +50,7 @@ apt -y install python3-dev python3-pip
 pip3 install -U pip numpy
 apt -y install python3-testresources
 # Install virtual environment
-pip3 install virtualenv virtualenvwrapper
+python3 -m pip install virtualenv virtualenvwrapper
 VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 echo "VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> ~/.bashrc
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
