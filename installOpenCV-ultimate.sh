@@ -103,6 +103,7 @@ make -j$(nproc)
 make install
 echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf
 ldconfig
+cd $cwd
 
 #=========================================================================
 
@@ -166,6 +167,7 @@ make install
  
 #cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages/
 #ln -f -s $py3binPath cv2.so
+cd $cwd
 
 #=========================================================================
 
@@ -229,3 +231,4 @@ make install
  
 #cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages/
 #ln -f -s $py3binPath cv2.so
+cd $cwd
