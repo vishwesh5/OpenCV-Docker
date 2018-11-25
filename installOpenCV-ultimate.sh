@@ -232,3 +232,9 @@ make install
 #cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages/
 #ln -f -s $py3binPath cv2.so
 cd $cwd
+
+
+source ~/.bashrc
+
+rm -rf opencv
+rm -rf opencv_contrib
