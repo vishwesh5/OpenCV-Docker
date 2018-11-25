@@ -233,8 +233,5 @@ make install
 #ln -f -s $py3binPath cv2.so
 cd $cwd
 
-
-source ~/.bashrc
-
 rm -rf opencv
 rm -rf opencv_contrib
