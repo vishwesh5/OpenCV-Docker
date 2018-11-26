@@ -91,7 +91,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
         
-make -j$(nproc)
+make -j$(sysctl -n hw.physicalcpu)
 sudo make install
 #sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 #sudo ldconfig
@@ -153,7 +153,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
         
-make -j$(nproc)
+make -j$(sysctl -n hw.physicalcpu)
 make install
 
 cd $cwd
@@ -214,7 +214,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
         
-make -j$(nproc)
+make -j$(sysctl -n hw.physicalcpu)
 make install
 
 cd $cwd
