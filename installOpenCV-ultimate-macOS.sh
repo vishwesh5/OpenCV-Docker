@@ -22,7 +22,9 @@ echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
 
 brew install python3
 brew install cmake
+brew install qt5
 
+QT5PATH=/usr/local/Cellar/qt/5.11.2_1
 # Save current working directory
 cwd=$(pwd)
 
@@ -81,6 +83,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
+            -D CMAKE_PREFIX_PATH=QT5PATH \
             -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.7/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
@@ -141,6 +144,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
+            -D CMAKEPREFIX_PATH=QT5PATH \
             -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.7/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
@@ -200,6 +204,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
+            -D CMAKE_PREFIX_PATH=QT5PATH \
             -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.7/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
