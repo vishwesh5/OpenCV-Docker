@@ -29,7 +29,7 @@ sudo -H pip3 install -U pip numpy
 
 # Install virtual environment
 sudo -H python3 -m pip install virtualenv virtualenvwrapper
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 echo "VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3" >> ~/.bash_profile
 echo "# Virtual Environment Wrapper" >> ~/.bash_profile
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bash_profile
