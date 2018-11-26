@@ -21,6 +21,7 @@ echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
 #source ~/.bash_profile
 
 brew install python3
+brew install cmake
 
 # Save current working directory
 cwd=$(pwd)
@@ -88,8 +89,8 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
         
 make -j$(nproc)
 sudo make install
-sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
-sudo ldconfig
+#sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+#sudo ldconfig
 cd $cwd
 
 #=========================================================================
