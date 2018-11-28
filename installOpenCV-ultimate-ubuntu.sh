@@ -89,7 +89,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.5/site-packages \
+            -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.5/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
@@ -121,7 +121,7 @@ mkdir installation/OpenCV-"$cvVersion"
 cd $cwd
 python3 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
@@ -152,7 +152,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.5/site-packages \
+            -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.5/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
@@ -183,7 +183,7 @@ mkdir installation/OpenCV-"$cvVersion"
 cd $cwd
 python3 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
@@ -214,7 +214,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.5/site-packages \
+            -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.5/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
