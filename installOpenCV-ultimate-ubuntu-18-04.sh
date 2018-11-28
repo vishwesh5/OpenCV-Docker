@@ -61,7 +61,7 @@ cd $cwd
 # create virtual environment
 python3 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
@@ -124,7 +124,7 @@ mkdir installation/OpenCV-"$cvVersion"
 cd $cwd
 python3 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
@@ -186,7 +186,7 @@ mkdir installation/OpenCV-"$cvVersion"
 cd $cwd
 python3 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
