@@ -121,9 +121,12 @@ mkdir installation/OpenCV-"$cvVersion"
 
 ############ For Python 3 ############
 # create virtual environment
-mkvirtualenv OpenCV-"$cvVersion"-py3 -p python3
-workon OpenCV-"$cvVersion"-py3
- 
+cd $cwd
+python3 -m venv OpenCV-"$cvVersion"-py3
+echo "# Virtual Environment Wrapper" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
+
 # now install python libraries within this virtual environment
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
  
@@ -180,9 +183,12 @@ mkdir installation/OpenCV-"$cvVersion"
 
 ############ For Python 3 ############
 # create virtual environment
-mkvirtualenv OpenCV-"$cvVersion"-py3 -p python3
-workon OpenCV-"$cvVersion"-py3
- 
+cd $cwd
+python3 -m venv OpenCV-"$cvVersion"-py3
+echo "# Virtual Environment Wrapper" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=source $cwd/OpenCV-$cvVersion-py3/bin/activate" >> ~/.bashrc
+source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
+
 # now install python libraries within this virtual environment
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
  
