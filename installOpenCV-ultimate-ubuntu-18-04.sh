@@ -65,6 +65,7 @@ echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
+pip install wheel
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
  
 # quit virtual environment
@@ -128,6 +129,7 @@ echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
+pip install wheel
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
  
 # quit virtual environment
@@ -190,6 +192,7 @@ echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 
 # now install python libraries within this virtual environment
+pip install wheel
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
  
 # quit virtual environment
