@@ -13,12 +13,24 @@ rm -rf opencv_contrib/build
 
 # Save current working directory
 cwd=$(pwd)
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum -y install epel-release
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum install -y python36u python36u-pip
+#sudo yum -y install python37
+#sudo yum -y install python3-devel
+sudo yum -y install cmake
+sudo yum -y install python-devel numpy
+sudo yum -y install gcc gcc-c++
+sudo yum -y install gtk2-devel
+sudo yum -y install libdc1394
+sudo yum -y install libdc1394-devel
 
-sudo apt -y update
-sudo apt -y upgrade
 
-sudo apt -y remove x264 libx264-dev
- 
+sudo yum -y install libv4l-devel
+sudo yum -y install ffmpeg-devel
+sudo yum -y install gstreamer-plugins-base-devel
+
 ## Install dependencies
 sudo apt -y install build-essential checkinstall cmake pkg-config yasm
 sudo apt -y install git gfortran
