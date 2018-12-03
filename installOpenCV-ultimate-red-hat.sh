@@ -60,12 +60,14 @@ cd $cwd
 #source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
 mkvirtualenv OpenCV-"$cvVersion"-py3 -p python3
 workon OpenCV-"$cvVersion"-py3
-pip install cmake numpy scipy matplotlib scikit-image scikit-learn ipython dlib
+pip install cmake 
+pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
 # quit virtual environment
 deactivate
 mkvirtualenv OpenCV-"$cvVersion"-py2 -p python2
 workon OpenCV-"$cvVersion"-py2
-pip install cmake numpy scipy matplotlib scikit-image scikit-learn ipython dlib
+pip install cmake
+pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
 # quit virtual environment
 deactivate
 ######################################
