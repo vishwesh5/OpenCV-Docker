@@ -15,64 +15,38 @@ rm -rf opencv_contrib/build
 cwd=$(pwd)
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install epel-release
-sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-sudo yum install -y python36u python36u-pip
+sudo yum install git cmake gcc-c++
+#sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+#sudo yum install -y python36u python36u-pip
 #sudo yum -y install python37
 #sudo yum -y install python3-devel
-sudo yum -y install cmake
+sudo yum install git cmake gcc-c++
+git clone https://github.com/opencv/opencv.git
+git clone https://github.com/opencv/opencv_contrib.git
 sudo yum -y install python-devel numpy
-sudo yum -y install gcc gcc-c++
 sudo yum -y install gtk2-devel
-sudo yum -y install libdc1394
-sudo yum -y install libdc1394-devel
+#sudo yum -y install libdc1394
+#sudo yum -y install libdc1394-devel
 
+sudo yum install libpng-devel libjpeg-turbo-devel jasper-devel openexr-devel libtiff-devel libwebp-devel
+sudo yum install libdc1394-devel libv4l-devel gstreamer-plugins-base-devel
+sudo yum install tbb-devel eigen3-devel
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+sudo python get-pip.py
 
-sudo yum -y install libv4l-devel
-sudo yum -y install ffmpeg-devel
-sudo yum -y install gstreamer-plugins-base-devel
+echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
+echo "source /usr/bin/virtualenvwrapper.sh" >> ~/.bashrc
+source /usr/bin/virtualenvwrapper.sh
 
-## Install dependencies
-sudo apt -y install build-essential checkinstall cmake pkg-config yasm
-sudo apt -y install git gfortran
-sudo apt -y install libjpeg8-dev libjasper-dev libpng12-dev
- 
-sudo apt -y install libtiff5-dev
- 
-sudo apt -y install libtiff-dev
- 
-sudo apt -y install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
-sudo apt -y install libxine2-dev libv4l-dev
-cd /usr/include/linux
-sudo ln -s -f ../libv4l1-videodev.h videodev.h
-cd $cwd
- 
-sudo apt -y install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
-sudo apt -y install libgtk2.0-dev libtbb-dev qt5-default
-sudo apt -y install libatlas-base-dev
-sudo apt -y install libfaac-dev libmp3lame-dev libtheora-dev
-sudo apt -y install libvorbis-dev libxvidcore-dev
-sudo apt -y install libopencore-amrnb-dev libopencore-amrwb-dev
-sudo apt -y install libavresample-dev
-sudo apt -y install x264 v4l-utils
- 
-# Optional dependencies
-sudo apt -y install libprotobuf-dev protobuf-compiler
-sudo apt -y install libgoogle-glog-dev libgflags-dev
-sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
-
-sudo apt -y install python3-dev python3-pip python3-venv
-sudo -H pip3 install -U pip numpy
-sudo apt -y install python3-testresources
-# Install virtual environment
+#sudo yum -y install libv4l-devel
+#sudo yum -y install ffmpeg-devel
+#sudo yum -y install gstreamer-plugins-base-devel
 
 cd $cwd
 ############ For Python 3 ############
 # create virtual environment
-python3 -m venv OpenCV-"$cvVersion"-py3
-echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
-source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
-
+mkvirtualenv OpenCV-"$cvVersion"-py2
+workon OpenCV-"$cvVersion"-py2
 # now install python libraries within this virtual environment
 pip install wheel
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
@@ -83,12 +57,12 @@ deactivate
 
 git clone https://github.com/opencv/opencv.git
 cd opencv
-git checkout tags/3.4.3
+git checkout master
 cd ..
  
 git clone https://github.com/opencv/opencv_contrib.git
 cd opencv_contrib
-git checkout tags/3.4.3
+git checkout master
 cd ..
 
 cd opencv
@@ -102,7 +76,8 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.5/site-packages \
+            -D OPENCV_GENERATE_PKGCONFIG=ON \
+            -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python3.5/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
