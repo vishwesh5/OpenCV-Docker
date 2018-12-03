@@ -123,10 +123,6 @@ echo "Installing OpenCV - 3.4.4"
 #Specify OpenCV version
 cvVersion="3.4.4"
 
-# Clean build directories
-rm -rf opencv/build
-rm -rf opencv_contrib/build
-
 # Create directory for installation
 mkdir installation
 mkdir installation/OpenCV-"$cvVersion"
@@ -198,10 +194,6 @@ echo "Installing OpenCV - 4.0.0"
  
 #Specify OpenCV version
 cvVersion="master"
-
-# Clean build directories
-rm -rf opencv/build
-rm -rf opencv_contrib/build
 
 # Create directory for installation
 mkdir installation
