@@ -15,28 +15,31 @@ rm -rf opencv_contrib/build
 cwd=$(pwd)
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install epel-release
-sudo yum install git cmake gcc-c++
-#sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-#sudo yum install -y python36u python36u-pip
+sudo yum -y install git cmake gcc-c++
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum install -y python36u python36u-pip
 #sudo yum -y install python37
 #sudo yum -y install python3-devel
-sudo yum install git cmake gcc-c++
-git clone https://github.com/opencv/opencv.git
-git clone https://github.com/opencv/opencv_contrib.git
+#sudo yum -y install git cmake gcc-c++
 sudo yum -y install python-devel numpy
 sudo yum -y install gtk2-devel
 #sudo yum -y install libdc1394
 #sudo yum -y install libdc1394-devel
 
-sudo yum install libpng-devel libjpeg-turbo-devel jasper-devel openexr-devel libtiff-devel libwebp-devel
-sudo yum install libdc1394-devel libv4l-devel gstreamer-plugins-base-devel
-sudo yum install tbb-devel eigen3-devel
+sudo yum -y install libjpeg-turbo-devel 
+sudo yum -y install libtiff-devel 
+sudo yum -y install libdc1394-devel --skip-broken
+sudo yum -y install tbb-devel eigen3-devel
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 sudo python get-pip.py
 
+sudo pip install virtualenv virtualenvwrapper
+sudo pip3 install virtualenv virtualenvwrapper
 echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-echo "source /usr/bin/virtualenvwrapper.sh" >> ~/.bashrc
-source /usr/bin/virtualenvwrapper.sh
+#echo "source /usr/bin/virtualenvwrapper.sh" >> ~/.bashrc
+#echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6" >> ~/.bashrc
+#export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
+#source /usr/bin/virtualenvwrapper.sh
 
 #sudo yum -y install libv4l-devel
 #sudo yum -y install ffmpeg-devel
@@ -45,8 +48,12 @@ source /usr/bin/virtualenvwrapper.sh
 cd $cwd
 ############ For Python 3 ############
 # create virtual environment
-mkvirtualenv OpenCV-"$cvVersion"-py2
-workon OpenCV-"$cvVersion"-py2
+python3.6 -m venv OpenCV-"$cvVersion"-py3
+echo "# Virtual Environment Wrapper" >> ~/.bashrc
+echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
+source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
+
+#workon OpenCV-"$cvVersion"-py3
 # now install python libraries within this virtual environment
 pip install wheel
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
