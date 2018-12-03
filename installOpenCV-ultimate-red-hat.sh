@@ -16,8 +16,10 @@ cwd=$(pwd)
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install epel-release
 sudo yum -y install git cmake gcc-c++
-sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-sudo yum install -y python36u python36u-pip
+#sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum install -y python36 python36-devel python36-setuptools
+sudo easy_install-3.6 pip
+
 #sudo yum -y install python37
 #sudo yum -y install python3-devel
 #sudo yum -y install git cmake gcc-c++
@@ -33,9 +35,9 @@ sudo yum -y install tbb-devel eigen3-devel
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 sudo python get-pip.py
 
-sudo pip install virtualenv virtualenvwrapper
-sudo pip3 install virtualenv virtualenvwrapper
-echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
+#sudo pip install virtualenv virtualenvwrapper
+#pip3 install virtualenv virtualenvwrapper
+#echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
 #echo "source /usr/bin/virtualenvwrapper.sh" >> ~/.bashrc
 #echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6" >> ~/.bashrc
 #export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
