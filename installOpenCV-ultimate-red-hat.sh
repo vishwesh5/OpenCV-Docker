@@ -2,10 +2,10 @@
 
 echo "OpenCV installation by learnOpenCV.com"
 
-echo "Installing OpenCV - 3.4.3"
+echo "Installing OpenCV - 4.0"
  
 #Specify OpenCV version
-cvVersion="3.4.3"
+cvVersion="master"
 
 # Clean build directories
 rm -rf opencv/build
