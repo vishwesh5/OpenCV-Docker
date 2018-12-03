@@ -8,14 +8,14 @@ echo "Installing OpenCV - 3.4.3"
 cvVersion="3.4.3"
 
 # Clean build directories
-rm -rf opencv/build
-rm -rf opencv_contrib/build
+rm -rf opencv
+rm -rf opencv_contrib
 
 # Save current working directory
 cwd=$(pwd)
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install epel-release
-sudo yum -y install git gcc-c++ cmake3
+sudo yum -y install git gcc gcc-c++ cmake3
 sudo yum -y install qt5-qtbase-devel
 sudo yum install -y python34 python34-devel python34-pip
 sudo yum install -y python python-devel python-pip
@@ -83,10 +83,10 @@ git checkout tags/3.4.3
 cd ..
 
 cd opencv
-
-echo "find_package(OpenGL REQUIRED)" >>./samples/cpp/CMakeLists.txt
-echo "find_package(GLUT REQUIRED)" >> ./samples/cpp/CMakeLists.txt
-sed -i '38s/.*/  ocv_target_link_libraries(${tgt} ${OPENCV_LINKER_LIBS} ${OPENCV_CPP_SAMPLES_REQUIRED_DEPS} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})/' ./samples/cpp/CMakeLists.txt
+echo 'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")' >> opencv/CMakeLists.txt
+#echo "find_package(OpenGL REQUIRED)" >>./samples/cpp/CMakeLists.txt
+#echo "find_package(GLUT REQUIRED)" >> ./samples/cpp/CMakeLists.txt
+#sed -i '38s/.*/  ocv_target_link_libraries(${tgt} ${OPENCV_LINKER_LIBS} ${OPENCV_CPP_SAMPLES_REQUIRED_DEPS} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})/' ./samples/cpp/CMakeLists.txt
 mkdir build
 cd build
             
@@ -104,8 +104,11 @@ cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
         -D WITH_OPENGL=ON \
         -D PYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+        -D ENABLE_CXX11=ON \
         -D BUILD_EXAMPLES=ON ..
-        
+
+read tmp
+
 make -j$(nproc)
 sudo make install
 sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
@@ -113,7 +116,8 @@ sudo ldconfig
 cd $cwd
 
 #=========================================================================
-
+rm -rf opencv
+rm -rf opencv_contrib
 echo "Installing OpenCV - 3.4.4"
  
 #Specify OpenCV version
@@ -164,6 +168,7 @@ sed -i '38s/.*/  ocv_target_link_libraries(${tgt} ${OPENCV_LINKER_LIBS} ${OPENCV
 mkdir build
 cd build
 
+
 cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
             -D CMAKE_INSTALL_PREFIX=/usr/local \
             -D INSTALL_C_EXAMPLES=ON \
@@ -178,6 +183,7 @@ cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
         -D WITH_OPENGL=ON \
         -D PYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+        -D ENABLE_CXX11=ON \
         -D BUILD_EXAMPLES=ON ..
         
 make -j$(nproc)
@@ -186,7 +192,8 @@ make install
 cd $cwd
 
 #=========================================================================
-
+rm -rf opencv
+rm -rf opencv_contrib
 echo "Installing OpenCV - 4.0.0"
  
 #Specify OpenCV version
@@ -252,6 +259,7 @@ cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
         -D WITH_OPENGL=ON \
         -D PYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+        -D ENABLE_CXX11=ON \
         -D BUILD_EXAMPLES=ON ..
         
 make -j$(nproc)
