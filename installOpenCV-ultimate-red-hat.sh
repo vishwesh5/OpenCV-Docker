@@ -2,10 +2,10 @@
 
 echo "OpenCV installation by learnOpenCV.com"
 
-echo "Installing OpenCV - 4.0"
+echo "Installing OpenCV - 3.4.3"
  
 #Specify OpenCV version
-cvVersion="master"
+cvVersion="3.4.3"
 
 # Clean build directories
 rm -rf opencv/build
@@ -15,7 +15,8 @@ rm -rf opencv_contrib/build
 cwd=$(pwd)
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install epel-release
-sudo yum -y install git cmake gcc-c++
+sudo yum -y install git cmake gcc-c++ cmake3
+sudo yum -y install qt5-qtbase-devel
 #sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 sudo yum install -y python36 python36-devel python36-setuptools
 sudo easy_install-3.6 pip
@@ -66,19 +67,19 @@ deactivate
 
 git clone https://github.com/opencv/opencv.git
 cd opencv
-git checkout master
+git checkout tags/3.4.3
 cd ..
  
 git clone https://github.com/opencv/opencv_contrib.git
 cd opencv_contrib
-git checkout master
+git checkout tags/3.4.3
 cd ..
 
 cd opencv
 mkdir build
 cd build
 
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
+cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
             -D CMAKE_INSTALL_PREFIX=/usr/local \
             -D INSTALL_C_EXAMPLES=ON \
             -D INSTALL_PYTHON_EXAMPLES=ON \
@@ -150,6 +151,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
+            -D OPENCV_GENERATE_PKGCONFIG=ON \
             -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.5/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
@@ -213,6 +215,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
+            -D OPENCV_GENERATE_PKGCONFIG=ON \
             -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.5/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
