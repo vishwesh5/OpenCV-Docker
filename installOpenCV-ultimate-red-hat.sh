@@ -89,9 +89,6 @@ echo "find_package(GLUT REQUIRED)" >> ./samples/cpp/CMakeLists.txt
 sed -i '38s/.*/  ocv_target_link_libraries(${tgt} ${OPENCV_LINKER_LIBS} ${OPENCV_CPP_SAMPLES_REQUIRED_DEPS} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})/' ./samples/cpp/CMakeLists.txt
 mkdir build
 cd build
-
-            -D OPENCV_PYTHON3_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages \
-            -D OPENCV_PYTHON2_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages \
             
 cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
             -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -101,6 +98,8 @@ cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
             -D OPENCV_GENERATE_PKGCONFIG=ON \
+            -D OPENCV_PYTHON3_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.4/site-packages \
+            -D OPENCV_PYTHON2_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
         -D PYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
@@ -130,16 +129,20 @@ mkdir installation/OpenCV-"$cvVersion"
 
 ############ For Python 3 ############
 # create virtual environment
-cd $cwd
-python3 -m venv OpenCV-"$cvVersion"-py3
-echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
-source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
-
-# now install python libraries within this virtual environment
-pip install wheel
+#python3.6 -m venv OpenCV-"$cvVersion"-py3
+#echo "# Virtual Environment Wrapper" >> ~/.bashrc
+#echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
+#source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
+mkvirtualenv OpenCV-"$cvVersion"-py3 -p python3
+workon OpenCV-"$cvVersion"-py3
+pip install cmake 
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
- 
+# quit virtual environment
+deactivate
+mkvirtualenv OpenCV-"$cvVersion"-py2 -p python2
+workon OpenCV-"$cvVersion"-py2
+pip install cmake
+pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
 # quit virtual environment
 deactivate
 ######################################
@@ -162,16 +165,18 @@ mkdir build
 cd build
 
 cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
-            -D CMAKE_INSTALL_PREFIX=$cwd/installation/OpenCV-"$cvVersion" \
+            -D CMAKE_INSTALL_PREFIX=/usr/local \
             -D INSTALL_C_EXAMPLES=ON \
             -D INSTALL_PYTHON_EXAMPLES=ON \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
             -D OPENCV_GENERATE_PKGCONFIG=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.6/site-packages \
+            -D OPENCV_PYTHON3_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.4/site-packages \
+            -D OPENCV_PYTHON2_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
+        -D PYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
         
@@ -197,16 +202,20 @@ mkdir installation/OpenCV-"$cvVersion"
 
 ############ For Python 3 ############
 # create virtual environment
-cd $cwd
-python3 -m venv OpenCV-"$cvVersion"-py3
-echo "# Virtual Environment Wrapper" >> ~/.bashrc
-echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
-source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
-
-# now install python libraries within this virtual environment
-pip install wheel
+#python3.6 -m venv OpenCV-"$cvVersion"-py3
+#echo "# Virtual Environment Wrapper" >> ~/.bashrc
+#echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
+#source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
+mkvirtualenv OpenCV-"$cvVersion"-py3 -p python3
+workon OpenCV-"$cvVersion"-py3
+pip install cmake 
 pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
- 
+# quit virtual environment
+deactivate
+mkvirtualenv OpenCV-"$cvVersion"-py2 -p python2
+workon OpenCV-"$cvVersion"-py2
+pip install cmake
+pip install numpy scipy matplotlib scikit-image scikit-learn ipython dlib
 # quit virtual environment
 deactivate
 ######################################
@@ -230,16 +239,18 @@ mkdir build
 cd build
 
 cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
-            -D CMAKE_INSTALL_PREFIX=$cwd/installation/OpenCV-"$cvVersion" \
+            -D CMAKE_INSTALL_PREFIX=/usr/local \
             -D INSTALL_C_EXAMPLES=ON \
             -D INSTALL_PYTHON_EXAMPLES=ON \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
             -D OPENCV_SKIP_PYTHON_LOADER=ON \
             -D OPENCV_GENERATE_PKGCONFIG=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=$cwd/OpenCV-$cvVersion-py3/lib/python3.6/site-packages \
+            -D OPENCV_PYTHON3_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.4/site-packages \
+            -D OPENCV_PYTHON2_INSTALL_PATH=$HOME/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
+        -D PYTHON_DEFAULT_EXECUTABLE=/usr/bin/python3 \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
         
