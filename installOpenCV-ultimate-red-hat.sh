@@ -34,8 +34,8 @@ sudo yum install -y freeglut-devel mesa-libGL mesa-libGL-devel
 sudo yum -y install libtiff-devel 
 sudo yum -y install libdc1394-devel --skip-broken
 sudo yum -y install tbb-devel eigen3-devel
-curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-sudo python get-pip.py
+#curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+#sudo python get-pip.py
 
 #sudo pip install virtualenv virtualenvwrapper
 #pip3 install virtualenv virtualenvwrapper
