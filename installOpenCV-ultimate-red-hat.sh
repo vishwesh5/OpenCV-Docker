@@ -107,8 +107,6 @@ cmake3 -D CMAKE_BUILD_TYPE=RELEASE \
         -D ENABLE_CXX11=ON \
         -D BUILD_EXAMPLES=ON ..
 
-read tmp
-
 make -j$(nproc)
 sudo make install
 sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
