@@ -42,8 +42,8 @@ sudo yum -y install boost boost-thread boost-devel
 sudo pip3 install virtualenv virtualenvwrapper
 #pip3 install virtualenv virtualenvwrapper
 echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-echo "source /usr/bin/virtualenvwrapper.sh" >> ~/.bashrc
 echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> ~/.bashrc
+echo "source /usr/bin/virtualenvwrapper.sh" >> ~/.bashrc
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 source /usr/bin/virtualenvwrapper.sh
 
