@@ -50,7 +50,9 @@ sudo apt -y install libprotobuf-dev protobuf-compiler
 sudo apt -y install libgoogle-glog-dev libgflags-dev
 sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 
-sudo apt -y install python3-dev python3-pip python3-venv
+sudo apt -y install python3.7 python3.7-dev python3.7-venv
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3.7 get-pip.py
 sudo -H pip3 install -U pip numpy
 sudo apt -y install python3-testresources
 
@@ -59,7 +61,7 @@ sudo apt -y install python3-testresources
 cd $cwd
 ############ For Python 3 ############
 # create virtual environment
-python3 -m venv OpenCV-"$cvVersion"-py3
+python3.7 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
 echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
@@ -123,7 +125,7 @@ mkdir installation/OpenCV-"$cvVersion"
 ############ For Python 3 ############
 # create virtual environment
 cd $cwd
-python3 -m venv OpenCV-"$cvVersion"-py3
+python3.7 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
 echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
@@ -186,7 +188,7 @@ mkdir installation/OpenCV-"$cvVersion"
 ############ For Python 3 ############
 # create virtual environment
 cd $cwd
-python3 -m venv OpenCV-"$cvVersion"-py3
+python3.7 -m venv OpenCV-"$cvVersion"-py3
 echo "# Virtual Environment Wrapper" >> ~/.bashrc
 echo "alias workoncv-$cvVersion=\"source $cwd/OpenCV-$cvVersion-py3/bin/activate\"" >> ~/.bashrc
 source "$cwd"/OpenCV-"$cvVersion"-py3/bin/activate
