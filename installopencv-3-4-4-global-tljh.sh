@@ -90,7 +90,7 @@ wget http://dlib.net/files/dlib-19.16.tar.bz2
 tar -xvjf dlib-19.16.tar.bz2
 cd dlib-19.16
 mkdir build
-mkdir ../dlib-installation
+#mkdir ../dlib-installation
 cd build
 cmake -DBUILD_SHARED_LIBS=1 ..
 make
