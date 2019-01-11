@@ -102,3 +102,6 @@ rm -rf opencv
 rm -rf opencv_contrib
 rm -rf dlib-19.16
 rm -rf dlib-19.16.tar.bz2
+
+# Add content
+sudo mkdir -p /srv/data/common
