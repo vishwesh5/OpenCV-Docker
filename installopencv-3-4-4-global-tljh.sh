@@ -105,3 +105,4 @@ rm -rf dlib-19.16.tar.bz2
 
 # Add content
 sudo mkdir -p /srv/data/common
+# Add further folders as required
