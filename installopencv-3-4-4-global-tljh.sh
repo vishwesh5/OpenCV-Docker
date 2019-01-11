@@ -51,7 +51,7 @@ sudo -E conda -y install -c quantstack -c conda-forge xeus-cling
 sudo -E conda -y install pip
 sudo -E pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
 sudo -E pip install dlib 
-#sudo -E pip install opencv-contrib-python==3.4.4.19
+sudo -E pip install opencv-contrib-python==3.4.4.19
 
 ######################################
 
@@ -73,11 +73,8 @@ cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D CMAKE_INSTALL_PREFIX=/usr/local \
-            -D INSTALL_C_EXAMPLES=ON \
-            -D INSTALL_PYTHON_EXAMPLES=ON \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
-            -D OPENCV_PYTHON3_INSTALL_PATH=/opt/tljh/user/lib/python3.6/site-packages \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
