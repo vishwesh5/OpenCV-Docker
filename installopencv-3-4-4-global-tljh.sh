@@ -51,7 +51,7 @@ sudo -E conda -y install -c quantstack -c conda-forge xeus-cling
 sudo -E conda -y install pip
 sudo -E pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
 sudo -E pip install dlib 
-sudo -E pip install opencv-contrib-python==3.4.4.19
+sudo -E pip install opencv-contrib-python==3.4.5.20
 
 ######################################
 
