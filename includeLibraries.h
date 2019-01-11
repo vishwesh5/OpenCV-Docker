@@ -4,7 +4,7 @@
 #pragma cling add_library_path("/usr/local/lib/")
 #pragma cling load("/usr/local/lib/libopencv_shape.so.3.4.5")
 #pragma cling load("/usr/local/lib/libopencv_stitching.so.3.4.5")
-#pragma cling load(/usr/local/lib/libopencv_objdetect.so.3.4.5")
+#pragma cling load("/usr/local/lib/libopencv_objdetect.so.3.4.5")
 #pragma cling load("/usr/local/lib/libopencv_superres.so.3.4.5")
 #pragma cling load("/usr/local/lib/libopencv_videostab.so.3.4.5")
 #pragma cling load("/usr/local/lib/libopencv_calib3d.so.3.4.5")
