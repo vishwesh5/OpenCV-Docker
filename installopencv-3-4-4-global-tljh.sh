@@ -83,3 +83,22 @@ make -j$(nproc)
 sudo make install
 sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
 sudo ldconfig
+
+cd $cwd
+
+wget http://dlib.net/files/dlib-19.16.tar.bz2
+tar -xvjf dlib-19.16.tar.bz2
+cd dlib-19.16
+mkdir build
+mkdir ../dlib-installation
+cd build
+cmake -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=$cwd/dlib-installation ..
+make
+make install
+
+cd $cwd
+
+rm -rf opencv
+rm -rf opencv_contrib
+rm -rf dlib-19.16
+rm -rf dlib-19.16.tar.bz2
