@@ -43,13 +43,14 @@ sudo apt -y install libgoogle-glog-dev libgflags-dev
 sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 
 sudo apt -y install python3-dev python3-pip
-sudo -H pip3 install -U pip numpy
+sudo -E pip3 install -U pip numpy
 sudo apt -y install python3-testresources
 
 cd $cwd
 
-sudo -H pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
-sudo -H pip install dlib
+sudo -E pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
+sudo -E pip install dlib opencv-contrib-python
+
  
 ######################################
 
