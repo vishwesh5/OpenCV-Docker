@@ -47,7 +47,7 @@ sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 #sudo apt -y install python3-testresources
 
 cd $cwd
-sudo -E conda -y install -c quantstack xeus-cling
+sudo -E conda -y install -c quantstack -c conda-forge xeus-cling
 sudo -E conda -y install pip
 sudo -E pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
 sudo -E pip install dlib opencv-contrib-python
