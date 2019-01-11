@@ -42,16 +42,16 @@ sudo apt -y install libprotobuf-dev protobuf-compiler
 sudo apt -y install libgoogle-glog-dev libgflags-dev
 sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 
-sudo apt -y install python3-dev python3-pip
-sudo -E pip3 install -U pip numpy
-sudo apt -y install python3-testresources
+#sudo apt -y install python3-dev python3-pip
+#sudo -E pip3 install -U pip numpy
+#sudo apt -y install python3-testresources
 
 cd $cwd
-
+sudo -E conda install -c quantstack xeus-cling
+sudo -E conda install pip
 sudo -E pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
 sudo -E pip install dlib opencv-contrib-python
 
- 
 ######################################
 
 git clone https://github.com/opencv/opencv.git
@@ -76,6 +76,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
             -D INSTALL_PYTHON_EXAMPLES=ON \
             -D WITH_TBB=ON \
             -D WITH_V4L=ON \
+            -D OPENCV_PYTHON3_INSTALL_PATH=/opt/tljh/user/lib/python3.6/site-packages \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
