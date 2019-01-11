@@ -48,8 +48,8 @@ sudo apt -y install python3-testresources
 
 cd $cwd
 
-pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
-pip install dlib
+sudo -H pip install cmake wheel numpy scipy matplotlib scikit-image scikit-learn ipython
+sudo -H pip install dlib
  
 ######################################
 
@@ -92,9 +92,9 @@ cd dlib-19.16
 mkdir build
 mkdir ../dlib-installation
 cd build
-cmake -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=$cwd/dlib-installation ..
+cmake -DBUILD_SHARED_LIBS=1 ..
 make
-make install
+sudo make install
 
 cd $cwd
 
